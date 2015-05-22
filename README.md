@@ -1,6 +1,6 @@
 Installation
 ====
-Add the .js and the .css file to zout HTML
+Add the .js and the .css file to your HTML
 
 Add this to your Javascript Code
 

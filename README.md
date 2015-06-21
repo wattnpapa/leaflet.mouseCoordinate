@@ -1,3 +1,5 @@
+[![Code Climate](https://codeclimate.com/github/PowerPan/leaflet.mouseCoordinate/badges/gpa.svg)](https://codeclimate.com/github/PowerPan/leaflet.mouseCoordinate)
+
 Installation
 ====
 Add the .js and the .css file to your HTML

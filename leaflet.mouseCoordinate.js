@@ -68,9 +68,9 @@ L.Control.mouseCoordinate  = L.Control.extend({
          um. UTM Zone, Ostwert ew und Nordwert nw muessen gegeben sein.
          Berechnet werden geographische Laenge lw und Breite bw im WGS84 Datum.*/
         
-        zone = utm.zone;
-        ew = utm.x;
-        nw = utm.y;
+        var zone = utm.zone;
+        var ew = utm.x;
+        var nw = utm.y;
          // Laengenzone zone, Ostwert ew und Nordwert nw im WGS84 Datum
         if (zone === "" || ew === "" || nw === ""){
             zone = "";

@@ -106,11 +106,12 @@ L.Control.mouseCoordinate  = L.Control.extend({
         var f6 =                           (180/pi)*(  151*ex6/6144 -  453*ex8/12288);
 
         // Entscheidung Nord-/Sued Halbkugel
+        var m_nw
         if (band >= "N"|| band === ""){
-            var m_nw = nw;
+            m_nw = nw;
         }
         else{
-            var m_nw = nw - 10e6;
+            m_nw = nw - 10e6;
         }
 
         // Geographische Breite bf zur Meridianbogenlaenge gf = m_nw
@@ -119,7 +120,7 @@ L.Control.mouseCoordinate  = L.Control.extend({
         var bf = sigma + f2*Math.sin(2*sigmr) + f4*Math.sin(4*sigmr) + f6*Math.sin(6*sigmr);
 
         // Breite bf in Radianten
-        br = bf * pi/180;
+        var br = bf * pi/180;
         var tan1 = Math.tan(br);
         var tan2 = tan1*tan1;
         var tan4 = tan2*tan2;
@@ -177,8 +178,8 @@ L.Control.mouseCoordinate  = L.Control.extend({
          gegeben sein. Berechnet werden UTM Zone, Ostwert ew und Nordwert nw.*/
 
 
-        lw = gps.lng;
-        bw = gps.lat;
+        var lw = gps.lng;
+        var bw = gps.lat;
         // Geographische Laenge lw und Breite bw im WGS84 Datum
         if (lw <= -180 || lw > 180 || bw <= -80 || bw >= 84){
             alert("Werte nicht im Bereich des UTM Systems\n"+
@@ -193,63 +194,63 @@ L.Control.mouseCoordinate  = L.Control.extend({
 
         // WGS84 Datum
         // Grosse Halbachse a und Abplattung f
-        a = 6378137.000;
-        f = 3.35281068e-3;
-        pi = Math.PI;
-        b_sel = 'CDEFGHJKLMNPQRSTUVWXX';
+        var a = 6378137.000;
+        var f = 3.35281068e-3;
+        var pi = Math.PI;
+        var b_sel = 'CDEFGHJKLMNPQRSTUVWXX';
 
         // Polkruemmungshalbmesser c
-        c = a/(1-f);
+        var c = a/(1-f);
 
         // Quadrat der zweiten numerischen Exzentrizitaet
-        ex2 = (2*f-f*f)/((1-f)*(1-f));
-        ex4 = ex2*ex2;
-        ex6 = ex4*ex2;
-        ex8 = ex4*ex4;
+        var ex2 = (2*f-f*f)/((1-f)*(1-f));
+        var ex4 = ex2*ex2;
+        var ex6 = ex4*ex2;
+        var ex8 = ex4*ex4;
 
         // Koeffizienten zur Berechnung der Meridianbogenlaenge
-        e0 = c*(pi/180)*(1 - 3*ex2/4 + 45*ex4/64 - 175*ex6/256 + 11025*ex8/16384);
-        e2 = c*( - 3*ex2/8 + 15*ex4/32 - 525*ex6/1024 +  2205*ex8/4096);
-        e4 = c*(15*ex4/256 - 105*ex6/1024 + 2205*ex8/16384);
-        e6 = c*( - 35*ex6/3072 + 315*ex8/12288);
+        var e0 = c*(pi/180)*(1 - 3*ex2/4 + 45*ex4/64 - 175*ex6/256 + 11025*ex8/16384);
+        var e2 = c*( - 3*ex2/8 + 15*ex4/32 - 525*ex6/1024 +  2205*ex8/4096);
+        var e4 = c*(15*ex4/256 - 105*ex6/1024 + 2205*ex8/16384);
+        var e6 = c*( - 35*ex6/3072 + 315*ex8/12288);
 
         // Laengenzone lz und Breitenzone (Band) bz
-        lzn = parseInt((lw+180)/6) + 1;
-        lz = lzn;
+        var lzn = parseInt((lw+180)/6) + 1;
+        var lz = lzn;
         if (lzn < 10){ 
             lz = "0" + lzn;
         }
-        bd = parseInt(1 + (bw + 80)/8);
-        bz = b_sel.substr(bd-1,1);
+        var bd = parseInt(1 + (bw + 80)/8);
+        var bz = b_sel.substr(bd-1,1);
 
         // Geographische Breite in Radianten br
-        br = bw * pi/180;
+        var br = bw * pi/180;
 
-        tan1 = Math.tan(br);
-        tan2 = tan1*tan1;
-        tan4 = tan2*tan2;
+        var tan1 = Math.tan(br);
+        var tan2 = tan1*tan1;
+        var tan4 = tan2*tan2;
 
-        cos1 = Math.cos(br);
-        cos2 = cos1*cos1;
-        cos4 = cos2*cos2;
-        cos3 = cos2*cos1;
-        cos5 = cos4*cos1;
+        var cos1 = Math.cos(br);
+        var cos2 = cos1*cos1;
+        var cos4 = cos2*cos2;
+        var cos3 = cos2*cos1;
+        var cos5 = cos4*cos1;
 
-        etasq = ex2*cos2;
+        var etasq = ex2*cos2;
 
         // Querkruemmungshalbmesser nd
-        nd = c/Math.sqrt(1 + etasq);
+        var nd = c/Math.sqrt(1 + etasq);
 
         // Meridianbogenlaenge g aus gegebener geographischer Breite bw
-        g = (e0*bw) + (e2*Math.sin(2*br)) + (e4*Math.sin(4*br)) + (e6*Math.sin(6*br));
+        var g = (e0*bw) + (e2*Math.sin(2*br)) + (e4*Math.sin(4*br)) + (e6*Math.sin(6*br));
 
         // Laengendifferenz dl zum Bezugsmeridian lh
-        lh = (lzn - 30)*6 - 3;
-        dl = (lw - lh)*pi/180;
-        dl2 = dl*dl;
-        dl4 = dl2*dl2;
-        dl3 = dl2*dl;
-        dl5 = dl4*dl;
+        var lh = (lzn - 30)*6 - 3;
+        var dl = (lw - lh)*pi/180;
+        var dl2 = dl*dl;
+        var dl4 = dl2*dl2;
+        var dl3 = dl2*dl;
+        var dl5 = dl4*dl;
 
         // Masstabsfaktor auf dem Bezugsmeridian bei UTM Koordinaten m = 0.9996
         // Nordwert nw und Ostwert ew als Funktion von geographischer Breite und Laenge
@@ -262,9 +263,9 @@ L.Control.mouseCoordinate  = L.Control.extend({
         }
         ew = 0.9996*( nd*cos1*dl + nd*cos3*(1-tan2+etasq)*dl3/6 + nd*cos5 *(5-18*tan2+tan4)*dl5/120) + 500000;
 
-        zone = lz+bz;
+        var zone = lz+bz;
 
-        nk = nw - parseInt(nw);
+        var nk = nw - parseInt(nw);
         if (nk < 0.5) {
             nw = "" + parseInt(nw);
         }
@@ -304,25 +305,27 @@ L.Control.mouseCoordinate  = L.Control.extend({
          letzten 5 Stellen von Ost- und Nordwert gebildete Koordinatenangabe
          UTMREF.*/
         
-        zone = utm.zone;
-        ew = utm.x;
-        nw = utm.y;
+        var zone = utm.zone;
+        var ew = utm.x;
+        var nw = utm.y;
      
         // Laengenzone zone, Ostwert ew und Nordwert nw im WGS84 Datum
-        z1 = zone.substr(0,2);
-        z2 = zone.substr(2,1);
-        ew1 = parseInt(ew.substr(0,2));
-        nw1 = parseInt(nw.substr(0,2));
-        ew2 = ew.substr(2,5);
-        nw2 = nw.substr(2,5);
+        var z1 = zone.substr(0,2);
+        var z2 = zone.substr(2,1);
+        var ew1 = parseInt(ew.substr(0,2));
+        var nw1 = parseInt(nw.substr(0,2));
+        var ew2 = ew.substr(2,5);
+        var nw2 = nw.substr(2,5);
 
-        m_east = 'ABCDEFGHJKLMNPQRSTUVWXYZ';
-        m_north = 'ABCDEFGHJKLMNPQRSTUV';
+        var m_east = 'ABCDEFGHJKLMNPQRSTUVWXYZ';
+        var m_north = 'ABCDEFGHJKLMNPQRSTUV';
 
-        if (z1 < "01" || z1 > "60" || z2 < "C" ||z2 > "X")
+        if (z1 < "01" || z1 > "60" || z2 < "C" ||z2 > "X"){
             alert(z1 + z2 + " ist keine gueltige UTM Zonenangabe");
-
-        i = z1 % 3;
+        }
+        
+        var m_ce;
+        var i = z1 % 3;
         if (i === 1) {
             m_ce = ew1 - 1;
         }
@@ -334,7 +337,7 @@ L.Control.mouseCoordinate  = L.Control.extend({
         }
 
         i = z1 % 2;
-        
+        var m_cn;
         if (i === 1) {
             m_cn = 0;
         }
@@ -352,7 +355,7 @@ L.Control.mouseCoordinate  = L.Control.extend({
             m_cn = m_cn - 20;
         }
 
-        band = m_east.charAt(m_ce) + m_north.charAt(m_cn);
+        var band = m_east.charAt(m_ce) + m_north.charAt(m_cn);
         
         return {zone: zone,band: band, x: ew2, y: nw2};
     },
@@ -381,18 +384,18 @@ L.Control.mouseCoordinate  = L.Control.extend({
 
         // Laengenzone zone, Ostwert ew und Nordwert nw im WGS84 Datum
 
-        m_east_0 = "STUVWXYZ";
-        m_east_1 = "ABCDEFGH";
-        m_east_2 = "JKLMNPQR";
-        m_north_0 = "FGHJKLMNPQRSTUVABCDE";
-        m_north_1 = "ABCDEFGHJKLMNPQRSTUV";
+        var m_east_0 = "STUVWXYZ";
+        var m_east_1 = "ABCDEFGH";
+        var m_east_2 = "JKLMNPQR";
+        var m_north_0 = "FGHJKLMNPQRSTUVABCDE";
+        var m_north_1 = "ABCDEFGHJKLMNPQRSTUV";
 
         //zone = raster.substr(0,3);
-        zone = mgr.zone;
-        r_east = mgr.band.substr(0,1);
-        r_north = mgr.band.substr(1,1);
+        var zone = mgr.zone;
+        var r_east = mgr.band.substr(0,1);
+        var r_north = mgr.band.substr(1,1);
 
-        i = parseInt(zone.substr(0,2)) % 3;
+        var i = parseInt(zone.substr(0,2)) % 3;
         if (i === 0){
            m_ce = m_east_0.indexOf(r_east) + 1;
         }
@@ -402,7 +405,7 @@ L.Control.mouseCoordinate  = L.Control.extend({
         if (i === 2){
             m_ce = m_east_2.indexOf(r_east) + 1;
         }
-        ew = "0" + m_ce + ew2;
+        var ew = "0" + m_ce + ew2;
 
         i = parseInt(zone.substr(0,2)) % 2;
         if (i === 0){
@@ -412,7 +415,7 @@ L.Control.mouseCoordinate  = L.Control.extend({
            m_cn = m_north_1.indexOf(r_north);
         }
 
-        band = zone.substr(2,1);
+        var band = zone.substr(2,1);
         if (band >= "N"){
             if (band === "Q" && m_cn < 10){
                m_cn = m_cn + 20;
@@ -467,24 +470,24 @@ L.Control.mouseCoordinate  = L.Control.extend({
         return {zone: zone, x: ew, y: nw};
     },
     _geo2geodeziminuten: function (gps){
-        latgrad = parseInt(gps.lat);
-        latminuten = Math.round( ((gps.lat - latgrad) * 60) * 10000 ) / 10000;
+        var latgrad = parseInt(gps.lat);
+        var latminuten = Math.round( ((gps.lat - latgrad) * 60) * 10000 ) / 10000;
 
-        lnggrad = parseInt(gps.lng);
-        lngminuten = Math.round( ((gps.lng - lnggrad) * 60) * 10000 ) / 10000;
+        var lnggrad = parseInt(gps.lng);
+        var lngminuten = Math.round( ((gps.lng - lnggrad) * 60) * 10000 ) / 10000;
 
         return this._AddNSEW({latgrad: latgrad, latminuten: latminuten, lnggrad: lnggrad, lngminuten: lngminuten});
     },
     _geo2gradminutensekunden: function (gps){
-        latgrad = parseInt(gps.lat);
-        latminuten = (gps.lat - latgrad) * 60;
-        latsekunden = Math.round(((latminuten - parseInt(latminuten)) * 60) * 100) / 100;
-        latminuten = parseInt(latminuten);
+        var latgrad = parseInt(gps.lat);
+        var latminuten = (gps.lat - latgrad) * 60;
+        var latsekunden = Math.round(((latminuten - parseInt(latminuten)) * 60) * 100) / 100;
+        var latminuten = parseInt(latminuten);
 
-        lnggrad = parseInt(gps.lng);
-        lngminuten = (gps.lng - lnggrad) * 60;
-        lngsekunden = Math.round(((lngminuten - parseInt(lngminuten)) * 60) * 100) /100;
-        lngminuten = parseInt(lngminuten);
+        var lnggrad = parseInt(gps.lng);
+        var lngminuten = (gps.lng - lnggrad) * 60;
+        var lngsekunden = Math.round(((lngminuten - parseInt(lngminuten)) * 60) * 100) /100;
+        var lngminuten = parseInt(lngminuten);
         
         return this._AddNSEW({latgrad: latgrad, latminuten: latminuten,latsekunden: latsekunden, lnggrad: lnggrad, lngminuten: lngminuten, lngsekunden: lngsekunden});
     },

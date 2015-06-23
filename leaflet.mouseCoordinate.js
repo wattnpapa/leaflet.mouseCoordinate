@@ -344,7 +344,20 @@ L.Control.mouseCoordinate  = L.Control.extend({
         }
         var ew = "0" + m_ce;
 
-        i = parseInt(zone.substr(0,2)) % 2;
+        var m_cn this._mgr2utm_find_m_cn(zone,band);
+        
+        var nw;
+        if (m_cn.length === 1){
+           nw = "0" + m_cn;
+        }
+        else {
+           nw = "" + m_cn;
+        }
+
+        return {zone: zone, x: ew, y: nw};
+    },
+    _mgr2utm_find_m_cn: function (zone, band){
+        var i = parseInt(zone.substr(0,2)) % 2;
         var m_cn;
         if (i === 0){
            m_cn = m_north_0.indexOf(r_north);
@@ -397,17 +410,8 @@ L.Control.mouseCoordinate  = L.Control.extend({
                m_cn = m_cn + 20;
             }
         }
-        
-        var nw;
-        if (m_cn.length === 1){
-           nw = "0" + m_cn;
-        }
-        else {
-           nw = "" + m_cn;
-        }
-
-        return {zone: zone, x: ew, y: nw};
-    },
+        return m_cn;
+    }
     _geo2geodeziminuten: function (gps){
         var latgrad = parseInt(gps.lat);
         var latminuten = Math.round( ((gps.lat - latgrad) * 60) * 10000 ) / 10000;

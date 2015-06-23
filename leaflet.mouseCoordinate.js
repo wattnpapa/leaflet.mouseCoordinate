@@ -56,9 +56,7 @@ L.Control.mouseCoordinate  = L.Control.extend({
     _utm2geo: function utm2geo(utm){
         /* Copyright (c) 2006, HELMUT H. HEIMEIER */
 
-        /* Die Funktion wandelt UTM Koordinaten in geographische Koordinaten
-         um. UTM Zone, Ostwert ew und Nordwert nw muessen gegeben sein.
-         Berechnet werden geographische Laenge lw und Breite bw im WGS84 Datum.*/
+        /* From UTM to GPS */
         
         var zone = utm.zone;
         var ew = utm.x;
@@ -157,9 +155,7 @@ L.Control.mouseCoordinate  = L.Control.extend({
     _geo2utm: function (gps){
         /* Copyright (c) 2006, HELMUT H. HEIMEIER */
 
-        /* Die Funktion wandelt geographische Koordinaten in UTM Koordinaten
-         um. Geographische Laenge lw und Breite bw muessen im WGS84 Datum
-         gegeben sein. Berechnet werden UTM Zone, Ostwert ew und Nordwert nw.*/
+        /* FROM GPS TO UTM.*/
 
 
         var lw = gps.lng;
@@ -271,11 +267,7 @@ L.Control.mouseCoordinate  = L.Control.extend({
     _utm2mgr: function (utm){
         /* Copyright (c) 2006, HELMUT H. HEIMEIER */
 
-        /* Die Funktion wandelt zivile UTM Koordinaten in militaerische Koordinaten
-         um. UTM Zone zone, Ostwert ew und Nordwert nw muessen gegeben sein.
-         Zurueckgegeben wird das Rasterfeld raster sowie die aus den
-         letzten 5 Stellen von Ost- und Nordwert gebildete Koordinatenangabe
-         UTMREF.*/
+        /* UTM to UTMREF.*/
         
         var zone = utm.zone;
         var ew = utm.x;
@@ -334,17 +326,7 @@ L.Control.mouseCoordinate  = L.Control.extend({
     _mgr2utm: function (mgr){
         /* Copyright (c) 2006, HELMUT H. HEIMEIER */
 
-        /* Die Funktion wandelt militaeische UTM Koordinaten (MGR oder
-         UTMREF) in zivile UTM Koordinaten um.
-         UTM Zone zone, raster und utmref muessen gegeben sein.
-         In zone muss die aus 2 Ziffern bestehende Laengenzone enthaltens ein
-         gefolgt von der aus einem Buchstaben bestehenden Bandangabe.
-         In raster muss die aus 2 Buchstaben bestehende Kennung fuer das
-         100 km x 100 km Rasterfeld enthalten sein.
-         In UTMREF muss der 5 stellige Ostwert stehen gefolgt von einem blank
-         und dem 5 stelligen Nordwert.
-         Berechnet wird daraus der 7 stellige Ost- und Nordwert im zivilen
-         UTM System.*/
+        /* UTMREF to UTM*/
 
         // Laengenzone zone, Ostwert ew und Nordwert nw im WGS84 Datum
 

@@ -456,7 +456,8 @@ L.Control.mouseCoordinate  = L.Control.extend({
                m_cn = m_cn + 20;
             }
         }
-
+        
+        var nw;
         if (m_cn.length === 1){
            nw = "0" + m_cn;
         }

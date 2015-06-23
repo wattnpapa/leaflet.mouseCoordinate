@@ -54,8 +54,7 @@ L.Control.mouseCoordinate  = L.Control.extend({
         this._gpsPositionContainer.innerHTML = content;
     },    
     _utm2geo: function utm2geo(utm){
-        /* Copyright (c) 2006, HELMUT H. HEIMEIER */
-
+        /* Copyright (c) 2006, HELMUT H. HEIMEIER 
         /* From UTM to GPS */
         
         var zone = utm.zone;
@@ -265,9 +264,8 @@ L.Control.mouseCoordinate  = L.Control.extend({
      },
 
     _utm2mgr: function (utm){
-        /* Copyright (c) 2006, HELMUT H. HEIMEIER */
-
-        /* UTM to UTMREF.*/
+        /* Copyright (c) 2006, HELMUT H. HEIMEIER 
+        UTM to UTMREF.*/
         
         var zone = utm.zone;
         var ew = utm.x;
@@ -324,9 +322,8 @@ L.Control.mouseCoordinate  = L.Control.extend({
         return {zone: zone,band: band, x: ew2, y: nw2};
     },
     _mgr2utm: function (mgr){
-        /* Copyright (c) 2006, HELMUT H. HEIMEIER */
-
-        /* UTMREF to UTM*/
+        /* Copyright (c) 2006, HELMUT H. HEIMEIER 
+        UTMREF to UTM*/
 
         // Laengenzone zone, Ostwert ew und Nordwert nw im WGS84 Datum
 

@@ -1,6 +1,7 @@
 /* 
     Author     : Johannes Rudolph
 */
+/* globals L: true */
 L.Control.mouseCoordinate  = L.Control.extend({
     options: {
         gps: true,

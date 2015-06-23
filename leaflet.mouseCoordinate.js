@@ -65,13 +65,13 @@ L.Control.mouseCoordinate  = L.Control.extend({
          in all copies or substantial portions of the Software.*/
 
         /* Die Funktion wandelt UTM Koordinaten in geographische Koordinaten
-         um. UTM Zone, Ostwert ew und Nordwert nw mÃ¼ssen gegeben sein.
+         um. UTM Zone, Ostwert ew und Nordwert nw muessen gegeben sein.
          Berechnet werden geographische LÃ¤nge lw und Breite bw im WGS84 Datum.*/
         
         zone = utm.zone;
         ew = utm.x;
         nw = utm.y;
-         // LÃ¤ngenzone zone, Ostwert ew und Nordwert nw im WGS84 Datum
+         // Laengenzone zone, Ostwert ew und Nordwert nw im WGS84 Datum
         if (zone === "" || ew === "" || nw === ""){
             zone = "";
             ew = "";
@@ -111,7 +111,7 @@ L.Control.mouseCoordinate  = L.Control.extend({
         else
             m_nw = nw - 10e6;
 
-        // Geographische Breite bf zur Meridianbogenlae¤nge gf = m_nw
+        // Geographische Breite bf zur Meridianbogenlaenge gf = m_nw
         sigma = (m_nw/0.9996)/e0;
         sigmr = sigma*pi/180;
         bf = sigma + f2*Math.sin(2*sigmr) + f4*Math.sin(4*sigmr) + f6*Math.sin(6*sigmr);
@@ -171,7 +171,7 @@ L.Control.mouseCoordinate  = L.Control.extend({
          in all copies or substantial portions of the Software.*/
 
         /* Die Funktion wandelt geographische Koordinaten in UTM Koordinaten
-         um. Geographische LÃ¤nge lw und Breite bw mÃ¼ssen im WGS84 Datum
+         um. Geographische Laenge lw und Breite bw muessen im WGS84 Datum
          gegeben sein. Berechnet werden UTM Zone, Ostwert ew und Nordwert nw.*/
 
 
@@ -180,7 +180,7 @@ L.Control.mouseCoordinate  = L.Control.extend({
         // Geographische Laenge lw und Breite bw im WGS84 Datum
         if (lw <= -180 || lw > 180 || bw <= -80 || bw >= 84){
             alert("Werte nicht im Bereich des UTM Systems\n"+
-            "-180Â° <= LW < +180Â°, -80Â° < BW < 84Â° N");
+            "-180° <= LW < +180°, -80° < BW < 84° N");
             zone = "";
             ew = "";
             nw = "";
@@ -249,7 +249,7 @@ L.Control.mouseCoordinate  = L.Control.extend({
         dl5 = dl4*dl;
 
         // Masstabsfaktor auf dem Bezugsmeridian bei UTM Koordinaten m = 0.9996
-        // Nordwert nw und Ostwert ew als Funktion von geographischer Breite und LÃ¤nge
+        // Nordwert nw und Ostwert ew als Funktion von geographischer Breite und Laenge
 
         if ( bw < 0 ) {
             nw = 10e6 + 0.9996*(g + nd*cos2*tan1*dl2/2 + nd*cos4*tan1*(5-tan2+9*etasq)
@@ -292,9 +292,9 @@ L.Control.mouseCoordinate  = L.Control.extend({
          The above copyright notice and this permission notice shall be included
          in all copies or substantial portions of the Software.*/
 
-        /* Die Funktion wandelt zivile UTM Koordinaten in militÃ¤rische Koordinaten
-         um. UTM Zone zone, Ostwert ew und Nordwert nw mÃ¼ssen gegeben sein.
-         ZurÃ¼ckgegeben wird das Rasterfeld raster sowie die aus den
+        /* Die Funktion wandelt zivile UTM Koordinaten in militaerische Koordinaten
+         um. UTM Zone zone, Ostwert ew und Nordwert nw muessen gegeben sein.
+         Zurueckgegeben wird das Rasterfeld raster sowie die aus den
          letzten 5 Stellen von Ost- und Nordwert gebildete Koordinatenangabe
          UTMREF.*/
         
@@ -314,7 +314,7 @@ L.Control.mouseCoordinate  = L.Control.extend({
         m_north = 'ABCDEFGHJKLMNPQRSTUV';
 
         if (z1 < "01" || z1 > "60" || z2 < "C" ||z2 > "X")
-            alert(z1 + z2 + " ist keine gültige UTM Zonenangabe");
+            alert(z1 + z2 + " ist keine gueltige UTM Zonenangabe");
 
         i = z1 % 3;
         if (i === 1) 

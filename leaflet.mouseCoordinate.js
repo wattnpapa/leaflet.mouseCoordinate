@@ -19,7 +19,6 @@ L.Control.mouseCoordinate  = L.Control.extend({
         
         var className = 'leaflet-control-mouseCoordinate';
         var container = this._container = L.DomUtil.create('div',className);
-        var options = this.options;
         
         this._gpsPositionContainer = L.DomUtil.create("div","gpsPos",container);
         
@@ -402,7 +401,7 @@ L.Control.mouseCoordinate  = L.Control.extend({
         if (i === 2){
             m_ce = m_east_2.indexOf(r_east) + 1;
         }
-        var ew = "0" + m_ce + ew2;
+        var ew = "0" + m_ce;
 
         i = parseInt(zone.substr(0,2)) % 2;
         var m_cn;
@@ -459,10 +458,10 @@ L.Control.mouseCoordinate  = L.Control.extend({
         }
 
         if (m_cn.length === 1){
-           nw = "0" + m_cn + nw2;
+           nw = "0" + m_cn;
         }
         else {
-           nw = "" + m_cn + nw2;
+           nw = "" + m_cn;
         }
 
         return {zone: zone, x: ew, y: nw};

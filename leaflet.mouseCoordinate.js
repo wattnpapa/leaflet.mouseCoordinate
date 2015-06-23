@@ -259,7 +259,7 @@ L.Control.mouseCoordinate  = L.Control.extend({
         }
         var ew = 0.9996*( nd*cos1*dl + nd*cos3*(1-tan2+etasq)*dl3/6 + nd*cos5 *(5-18*tan2+tan4)*dl5/120) + 500000;
 
-        zone = lz+bz;
+        var zone = lz+bz;
 
         var nk = nw - parseInt(nw);
         if (nk < 0.5) {
@@ -392,6 +392,7 @@ L.Control.mouseCoordinate  = L.Control.extend({
         var r_north = mgr.band.substr(1,1);
 
         var i = parseInt(zone.substr(0,2)) % 3;
+        var m_ce;
         if (i === 0){
            m_ce = m_east_0.indexOf(r_east) + 1;
         }
@@ -404,6 +405,7 @@ L.Control.mouseCoordinate  = L.Control.extend({
         var ew = "0" + m_ce + ew2;
 
         i = parseInt(zone.substr(0,2)) % 2;
+        var m_cn;
         if (i === 0){
            m_cn = m_north_0.indexOf(r_north);
         }

@@ -85,25 +85,25 @@ L.Control.mouseCoordinate  = L.Control.extend({
 
         // WGS84 Datum
         // Grosse Halbachse a und Abplattung f
-        a = 6378137.000;
-        f = 3.35281068e-3;
-        pi = Math.PI;
+        var a = 6378137.000;
+        var f = 3.35281068e-3;
+        var pi = Math.PI;
 
         // Polkruemmungshalbmesser c
-        c = a/(1-f);
+        var c = a/(1-f);
 
         // Quadrat der zweiten numerischen Exzentrizitaet
-        ex2 = (2*f-f*f)/((1-f)*(1-f));
-        ex4 = ex2*ex2;
-        ex6 = ex4*ex2;
-        ex8 = ex4*ex4;
+        var ex2 = (2*f-f*f)/((1-f)*(1-f));
+        var ex4 = ex2*ex2;
+        var ex6 = ex4*ex2;
+        var ex8 = ex4*ex4;
 
         // Koeffizienten zur Berechnung der geographischen Breite aus gegebener
         // Meridianbogenlaenge
-        e0 = c*(pi/180)*(1 - 3*ex2/4 + 45*ex4/64 - 175*ex6/256 + 11025*ex8/16384);
-        f2 =   (180/pi)*(    3*ex2/8 - 3*ex4/16  + 213*ex6/2048 -  255*ex8/4096);
-        f4 =              (180/pi)*(  21*ex4/256 -  21*ex6/256  +  533*ex8/8192);
-        f6 =                           (180/pi)*(  151*ex6/6144 -  453*ex8/12288);
+        var e0 = c*(pi/180)*(1 - 3*ex2/4 + 45*ex4/64 - 175*ex6/256 + 11025*ex8/16384);
+        var f2 =   (180/pi)*(    3*ex2/8 - 3*ex4/16  + 213*ex6/2048 -  255*ex8/4096);
+        var f4 =              (180/pi)*(  21*ex4/256 -  21*ex6/256  +  533*ex8/8192);
+        var f6 =                           (180/pi)*(  151*ex6/6144 -  453*ex8/12288);
 
         // Entscheidung Nord-/Sued Halbkugel
         if (band >= "N"|| band === ""){

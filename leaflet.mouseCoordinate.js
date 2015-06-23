@@ -255,8 +255,7 @@ L.Control.mouseCoordinate  = L.Control.extend({
         // Nordwert nw und Ostwert ew als Funktion von geographischer Breite und Laenge
 
         if ( bw < 0 ) {
-            nw = 10e6 + 0.9996*(g + nd*cos2*tan1*dl2/2 + nd*cos4*tan1*(5-tan2+9*etasq)
-            *dl4/24);
+            nw = 10e6 + 0.9996*(g + nd*cos2*tan1*dl2/2 + nd*cos4*tan1*(5-tan2+9*etasq)*dl4/24);
         }
         else {
             nw = 0.9996*(g + nd*cos2*tan1*dl2/2 + nd*cos4*tan1*(5-tan2+9*etasq)*dl4/24);
@@ -266,21 +265,25 @@ L.Control.mouseCoordinate  = L.Control.extend({
         zone = lz+bz;
 
         nk = nw - parseInt(nw);
-        if (nk < 0.5) 
+        if (nk < 0.5) {
             nw = "" + parseInt(nw);
-        else 
+        }
+        else{ 
             nw = "" + (parseInt(nw) + 1);
-
+        }
+        
         while (nw.length < 7) {
             nw = "0" + nw;
         }
 
         nk = ew - parseInt(ew);
-        if (nk < 0.5) 
+        if (nk < 0.5) {
             ew = "0" + parseInt(ew);
-        else 
+        }
+        else { 
             ew = "0" + parseInt(ew+1);
-
+        }
+        
         return {zone: zone, x: ew, y: nw};
      },
 
@@ -320,27 +323,34 @@ L.Control.mouseCoordinate  = L.Control.extend({
             alert(z1 + z2 + " ist keine gueltige UTM Zonenangabe");
 
         i = z1 % 3;
-        if (i === 1) 
+        if (i === 1) {
             m_ce = ew1 - 1;
-        if (i === 2) 
+        }
+        if (i === 2) {
             m_ce = ew1 + 7;
-        if (i === 0)
+        }
+        if (i === 0){
             m_ce = ew1 + 15;
+        }
 
         i = z1 % 2;
         
-        if (i === 1) 
+        if (i === 1) {
             m_cn = 0;
-        else 
+        }
+        else {
             m_cn = 5;
+        }
 
         i = nw1;
-        while (i-20 >= 0)
+        while (i-20 >= 0){
             i = i-20;
+        }
         
         m_cn = m_cn + i;
-        if (m_cn > 19) 
+        if (m_cn > 19){ 
             m_cn = m_cn - 20;
+        }
 
         band = m_east.charAt(m_ce) + m_north.charAt(m_cn);
         
@@ -383,56 +393,76 @@ L.Control.mouseCoordinate  = L.Control.extend({
         r_north = mgr.band.substr(1,1);
 
         i = parseInt(zone.substr(0,2)) % 3;
-        if (i === 0)
+        if (i === 0){
            m_ce = m_east_0.indexOf(r_east) + 1;
-        if (i === 1)
+        }
+        if (i === 1){
             m_ce = m_east_1.indexOf(r_east) + 1;
-        if (i === 2)
+        }
+        if (i === 2){
             m_ce = m_east_2.indexOf(r_east) + 1;
+        }
         ew = "0" + m_ce + ew2;
 
         i = parseInt(zone.substr(0,2)) % 2;
-        if (i === 0)
+        if (i === 0){
            m_cn = m_north_0.indexOf(r_north);
-        else
+        }
+        else{
            m_cn = m_north_1.indexOf(r_north);
+        }
 
         band = zone.substr(2,1);
         if (band >= "N"){
-            if (band === "Q" && m_cn < 10)
+            if (band === "Q" && m_cn < 10){
                m_cn = m_cn + 20;
-            if (band >= "R")
+            }
+            if (band >= "R"){
                m_cn = m_cn + 20;
-            if (band === "S" && m_cn < 30)
+            }
+            if (band === "S" && m_cn < 30){
                m_cn = m_cn + 20;
-            if (band >= "T")
+            }
+            if (band >= "T"){
                m_cn = m_cn + 20;
-            if (band === "U" && m_cn < 50)
+            }
+            if (band === "U" && m_cn < 50){
                m_cn = m_cn + 20;
+            }
         }
         else {
-            if (band === "C" && m_cn < 10)
+            if (band === "C" && m_cn < 10){
                m_cn = m_cn + 20;
-            if (band >= "D")
+            }
+            if (band >= "D"){
                m_cn = m_cn + 20;
-            if (band === "F" && m_cn < 30)
+            }
+            if (band === "F" && m_cn < 30){
                m_cn = m_cn + 20;
-            if (band >= "G")
+            }
+            if (band >= "G"){
                m_cn = m_cn + 20;
-            if (band === "H" && m_cn < 50)
+            }
+            if (band === "H" && m_cn < 50){
                m_cn = m_cn + 20;
-            if (band >= "J")
+            }
+            if (band >= "J"){
                m_cn = m_cn + 20;
-            if (band === "K" && m_cn < 70)
+            }
+            if (band === "K" && m_cn < 70){
                m_cn = m_cn + 20;
-            if (band >= "L")
+            }
+            if (band >= "L"){
                m_cn = m_cn + 20;
+            }
         }
 
-        if (m_cn.length === 1)
+        if (m_cn.length === 1){
            nw = "0" + m_cn + nw2;
-        else
+        }
+        else {
            nw = "" + m_cn + nw2;
+        }
 
         return {zone: zone, x: ew, y: nw};
     },

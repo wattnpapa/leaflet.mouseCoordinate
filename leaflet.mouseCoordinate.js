@@ -182,7 +182,7 @@ L.Control.mouseCoordinate  = L.Control.extend({
         var bw = gps.lat;
         // Geographische Laenge lw und Breite bw im WGS84 Datum
         if (lw <= -180 || lw > 180 || bw <= -80 || bw >= 84){
-            alert("Werte nicht im Bereich des UTM Systems\n -180 <= LW < +180, -80 < BW < 84 N");
+            alert("Werte nicht im Bereich des UTM Systems\n -180 <= LW < +180, -80 < BW < 84 N"); // jshint ignore:line
             return;
         }
         lw = parseFloat(lw);
@@ -317,7 +317,7 @@ L.Control.mouseCoordinate  = L.Control.extend({
         var m_north = 'ABCDEFGHJKLMNPQRSTUV';
 
         if (z1 < "01" || z1 > "60" || z2 < "C" ||z2 > "X"){
-            alert(z1 + z2 + " ist keine gueltige UTM Zonenangabe");
+            alert(z1 + z2 + " ist keine gueltige UTM Zonenangabe"); // jshint ignore:line
         }
         
         var m_ce;

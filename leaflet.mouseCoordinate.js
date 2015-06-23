@@ -66,7 +66,7 @@ L.Control.mouseCoordinate  = L.Control.extend({
 
         /* Die Funktion wandelt UTM Koordinaten in geographische Koordinaten
          um. UTM Zone, Ostwert ew und Nordwert nw muessen gegeben sein.
-         Berechnet werden geographische LÃ¤nge lw und Breite bw im WGS84 Datum.*/
+         Berechnet werden geographische Laenge lw und Breite bw im WGS84 Datum.*/
         
         zone = utm.zone;
         ew = utm.x;
@@ -106,10 +106,12 @@ L.Control.mouseCoordinate  = L.Control.extend({
         f6 =                           (180/pi)*(  151*ex6/6144 -  453*ex8/12288);
 
         // Entscheidung Nord-/Sued Halbkugel
-        if (band >= "N"|| band === "")
+        if (band >= "N"|| band === ""){
             m_nw = nw;
-        else
+        }
+        else{
             m_nw = nw - 10e6;
+        }
 
         // Geographische Breite bf zur Meridianbogenlaenge gf = m_nw
         sigma = (m_nw/0.9996)/e0;
@@ -180,7 +182,7 @@ L.Control.mouseCoordinate  = L.Control.extend({
         // Geographische Laenge lw und Breite bw im WGS84 Datum
         if (lw <= -180 || lw > 180 || bw <= -80 || bw >= 84){
             alert("Werte nicht im Bereich des UTM Systems\n"+
-            "-180° <= LW < +180°, -80° < BW < 84° N");
+            "-180 <= LW < +180, -80 < BW < 84 N");
             zone = "";
             ew = "";
             nw = "";
@@ -214,8 +216,9 @@ L.Control.mouseCoordinate  = L.Control.extend({
         // Laengenzone lz und Breitenzone (Band) bz
         lzn = parseInt((lw+180)/6) + 1;
         lz = lzn;
-        if (lzn < 10) 
+        if (lzn < 10){ 
             lz = "0" + lzn;
+        }
         bd = parseInt(1 + (bw + 80)/8);
         bz = b_sel.substr(bd-1,1);
 
@@ -354,12 +357,12 @@ L.Control.mouseCoordinate  = L.Control.extend({
          The above copyright notice and this permission notice shall be included
          in all copies or substantial portions of the Software.*/
 
-        /* Die Funktion wandelt militÃ¤rische UTM Koordinaten (MGR oder
+        /* Die Funktion wandelt militaeische UTM Koordinaten (MGR oder
          UTMREF) in zivile UTM Koordinaten um.
-         UTM Zone zone, raster und utmref mÃ¼ssen gegeben sein.
-         In zone muss die aus 2 Ziffern bestehende LÃ¤ngenzone enthaltens ein
+         UTM Zone zone, raster und utmref muessen gegeben sein.
+         In zone muss die aus 2 Ziffern bestehende Laengenzone enthaltens ein
          gefolgt von der aus einem Buchstaben bestehenden Bandangabe.
-         In raster muss die aus 2 Buchstaben bestehende Kennung fÃ¼r das
+         In raster muss die aus 2 Buchstaben bestehende Kennung fuer das
          100 km x 100 km Rasterfeld enthalten sein.
          In UTMREF muss der 5 stellige Ostwert stehen gefolgt von einem blank
          und dem 5 stelligen Nordwert.

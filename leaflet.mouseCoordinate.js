@@ -84,34 +84,34 @@ L.Control.mouseCoordinate  = L.Control.extend({
         nw = parseFloat(nw);
 
         // WGS84 Datum
-        // GroÃŸe Halbachse a und Abplattung f
+        // Grosse Halbachse a und Abplattung f
         a = 6378137.000;
         f = 3.35281068e-3;
         pi = Math.PI;
 
-        // PolkrÃ¼mmungshalbmesser c
+        // Polkruemmungshalbmesser c
         c = a/(1-f);
 
-        // Quadrat der zweiten numerischen ExzentrizitÃ¤t
+        // Quadrat der zweiten numerischen Exzentrizitaet
         ex2 = (2*f-f*f)/((1-f)*(1-f));
         ex4 = ex2*ex2;
         ex6 = ex4*ex2;
         ex8 = ex4*ex4;
 
         // Koeffizienten zur Berechnung der geographischen Breite aus gegebener
-        // MeridianbogenlÃ¤nge
+        // Meridianbogenlaenge
         e0 = c*(pi/180)*(1 - 3*ex2/4 + 45*ex4/64 - 175*ex6/256 + 11025*ex8/16384);
         f2 =   (180/pi)*(    3*ex2/8 - 3*ex4/16  + 213*ex6/2048 -  255*ex8/4096);
         f4 =              (180/pi)*(  21*ex4/256 -  21*ex6/256  +  533*ex8/8192);
         f6 =                           (180/pi)*(  151*ex6/6144 -  453*ex8/12288);
 
-        // Entscheidung Nord-/SÃ¼d Halbkugel
+        // Entscheidung Nord-/Sued Halbkugel
         if (band >= "N"|| band === "")
             m_nw = nw;
         else
             m_nw = nw - 10e6;
 
-        // Geographische Breite bf zur MeridianbogenlÃ¤nge gf = m_nw
+        // Geographische Breite bf zur Meridianbogenlae¤nge gf = m_nw
         sigma = (m_nw/0.9996)/e0;
         sigmr = sigma*pi/180;
         bf = sigma + f2*Math.sin(2*sigmr) + f4*Math.sin(4*sigmr) + f6*Math.sin(6*sigmr);
@@ -127,7 +127,7 @@ L.Control.mouseCoordinate  = L.Control.extend({
 
         etasq = ex2*cos2;
 
-        // QuerkrÃ¼mmungshalbmesser nd
+        // Querkruemmungshalbmesser nd
         nd = c/Math.sqrt(1 + etasq);
         nd2 = nd*nd;
         nd4 = nd2*nd2;
@@ -135,7 +135,7 @@ L.Control.mouseCoordinate  = L.Control.extend({
         nd3 = nd2*nd;
         nd5 = nd4*nd;
 
-        // LÃ¤ngendifferenz dl zum Bezugsmeridian lh
+        // Laengendifferenz dl zum Bezugsmeridian lh
         lh = (zone - 30)*6 - 3;
         dy = (ew-500000)/0.9996;
         dy2 = dy*dy;
@@ -152,7 +152,7 @@ L.Control.mouseCoordinate  = L.Control.extend({
         l3 = - (1+2*tan2+etasq)/(6*nd3*cos1);
         l5 =   (5+28*tan2+24*tan4)/(120*nd5*cos1);
 
-        // Geographische Breite bw und LÃ¤nge lw als Funktion von Ostwert ew
+        // Geographische Breite bw und Laenge lw als Funktion von Ostwert ew
         // und Nordwert nw
         bw = bf + (180/pi) * (b2*dy2 + b4*dy4 + b6*dy6);
         lw = lh + (180/pi) * (l1*dy  + l3*dy3 + l5*dy5);
@@ -177,7 +177,7 @@ L.Control.mouseCoordinate  = L.Control.extend({
 
         lw = gps.lng;
         bw = gps.lat;
-        // Geographische LÃ¤nge lw und Breite bw im WGS84 Datum
+        // Geographische Laenge lw und Breite bw im WGS84 Datum
         if (lw <= -180 || lw > 180 || bw <= -80 || bw >= 84){
             alert("Werte nicht im Bereich des UTM Systems\n"+
             "-180Â° <= LW < +180Â°, -80Â° < BW < 84Â° N");
@@ -190,28 +190,28 @@ L.Control.mouseCoordinate  = L.Control.extend({
         bw = parseFloat(bw);
 
         // WGS84 Datum
-        // GroÃŸe Halbachse a und Abplattung f
+        // Grosse Halbachse a und Abplattung f
         a = 6378137.000;
         f = 3.35281068e-3;
         pi = Math.PI;
         b_sel = 'CDEFGHJKLMNPQRSTUVWXX';
 
-        // PolkrÃ¼mmungshalbmesser c
+        // Polkruemmungshalbmesser c
         c = a/(1-f);
 
-        // Quadrat der zweiten numerischen ExzentrizitÃ¤t
+        // Quadrat der zweiten numerischen Exzentrizitaet
         ex2 = (2*f-f*f)/((1-f)*(1-f));
         ex4 = ex2*ex2;
         ex6 = ex4*ex2;
         ex8 = ex4*ex4;
 
-        // Koeffizienten zur Berechnung der MeridianbogenlÃ¤nge
+        // Koeffizienten zur Berechnung der Meridianbogenlaenge
         e0 = c*(pi/180)*(1 - 3*ex2/4 + 45*ex4/64 - 175*ex6/256 + 11025*ex8/16384);
         e2 = c*( - 3*ex2/8 + 15*ex4/32 - 525*ex6/1024 +  2205*ex8/4096);
         e4 = c*(15*ex4/256 - 105*ex6/1024 + 2205*ex8/16384);
         e6 = c*( - 35*ex6/3072 + 315*ex8/12288);
 
-        // LÃ¤ngenzone lz und Breitenzone (Band) bz
+        // Laengenzone lz und Breitenzone (Band) bz
         lzn = parseInt((lw+180)/6) + 1;
         lz = lzn;
         if (lzn < 10) 
@@ -234,13 +234,13 @@ L.Control.mouseCoordinate  = L.Control.extend({
 
         etasq = ex2*cos2;
 
-        // QuerkrÃ¼mmungshalbmesser nd
+        // Querkruemmungshalbmesser nd
         nd = c/Math.sqrt(1 + etasq);
 
-        // MeridianbogenlÃ¤nge g aus gegebener geographischer Breite bw
+        // Meridianbogenlaenge g aus gegebener geographischer Breite bw
         g = (e0*bw) + (e2*Math.sin(2*br)) + (e4*Math.sin(4*br)) + (e6*Math.sin(6*br));
 
-        // LÃ¤ngendifferenz dl zum Bezugsmeridian lh
+        // Laengendifferenz dl zum Bezugsmeridian lh
         lh = (lzn - 30)*6 - 3;
         dl = (lw - lh)*pi/180;
         dl2 = dl*dl;
@@ -248,7 +248,7 @@ L.Control.mouseCoordinate  = L.Control.extend({
         dl3 = dl2*dl;
         dl5 = dl4*dl;
 
-        // MaÃŸstabsfaktor auf dem Bezugsmeridian bei UTM Koordinaten m = 0.9996
+        // Masstabsfaktor auf dem Bezugsmeridian bei UTM Koordinaten m = 0.9996
         // Nordwert nw und Ostwert ew als Funktion von geographischer Breite und LÃ¤nge
 
         if ( bw < 0 ) {
@@ -302,7 +302,7 @@ L.Control.mouseCoordinate  = L.Control.extend({
         ew = utm.x;
         nw = utm.y;
      
-        // LÃ¤ngenzone zone, Ostwert ew und Nordwert nw im WGS84 Datum
+        // Laengenzone zone, Ostwert ew und Nordwert nw im WGS84 Datum
         z1 = zone.substr(0,2);
         z2 = zone.substr(2,1);
         ew1 = parseInt(ew.substr(0,2));
@@ -366,7 +366,7 @@ L.Control.mouseCoordinate  = L.Control.extend({
          Berechnet wird daraus der 7 stellige Ost- und Nordwert im zivilen
          UTM System.*/
 
-        // LÃ¤ngenzone zone, Ostwert ew und Nordwert nw im WGS84 Datum
+        // Laengenzone zone, Ostwert ew und Nordwert nw im WGS84 Datum
 
         m_east_0 = "STUVWXYZ";
         m_east_1 = "ABCDEFGH";

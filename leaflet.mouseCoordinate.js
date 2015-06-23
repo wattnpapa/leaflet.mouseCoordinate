@@ -54,8 +54,7 @@ L.Control.mouseCoordinate  = L.Control.extend({
         this._gpsPositionContainer.innerHTML = content;
     },    
     _utm2geo: function utm2geo(utm){
-        /* Copyright (c) 2006, HELMUT H. HEIMEIER 
-        /* From UTM to GPS */
+        // Copyright (c) 2006, HELMUT H. HEIMEIER
         
         var zone = utm.zone;
         var ew = utm.x;
@@ -152,10 +151,7 @@ L.Control.mouseCoordinate  = L.Control.extend({
         return {lat: bw, lng: lw};
     },
     _geo2utm: function (gps){
-        /* Copyright (c) 2006, HELMUT H. HEIMEIER */
-
-        /* FROM GPS TO UTM.*/
-
+        //Copyright (c) 2006, HELMUT H. HEIMEIER 
 
         var lw = gps.lng;
         var bw = gps.lat;
@@ -264,8 +260,7 @@ L.Control.mouseCoordinate  = L.Control.extend({
      },
 
     _utm2mgr: function (utm){
-        /* Copyright (c) 2006, HELMUT H. HEIMEIER 
-        UTM to UTMREF.*/
+        // Copyright (c) 2006, HELMUT H. HEIMEIER 
         
         var zone = utm.zone;
         var ew = utm.x;
@@ -322,11 +317,9 @@ L.Control.mouseCoordinate  = L.Control.extend({
         return {zone: zone,band: band, x: ew2, y: nw2};
     },
     _mgr2utm: function (mgr){
-        /* Copyright (c) 2006, HELMUT H. HEIMEIER 
-        UTMREF to UTM*/
-
+        // Copyright (c) 2006, HELMUT H. HEIMEIER 
+        
         // Laengenzone zone, Ostwert ew und Nordwert nw im WGS84 Datum
-
         var m_east_0 = "STUVWXYZ";
         var m_east_1 = "ABCDEFGH";
         var m_east_2 = "JKLMNPQR";

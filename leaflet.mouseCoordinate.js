@@ -106,7 +106,7 @@ L.Control.mouseCoordinate  = L.Control.extend({
         var f6 =                           (180/pi)*(  151*ex6/6144 -  453*ex8/12288);
 
         // Entscheidung Nord-/Sued Halbkugel
-        var m_nw
+        var m_nw;
         if (band >= "N"|| band === ""){
             m_nw = nw;
         }
@@ -182,11 +182,7 @@ L.Control.mouseCoordinate  = L.Control.extend({
         var bw = gps.lat;
         // Geographische Laenge lw und Breite bw im WGS84 Datum
         if (lw <= -180 || lw > 180 || bw <= -80 || bw >= 84){
-            alert("Werte nicht im Bereich des UTM Systems\n"+
-            "-180 <= LW < +180, -80 < BW < 84 N");
-            zone = "";
-            ew = "";
-            nw = "";
+            alert("Werte nicht im Bereich des UTM Systems\n -180 <= LW < +180, -80 < BW < 84 N");
             return;
         }
         lw = parseFloat(lw);
@@ -254,16 +250,16 @@ L.Control.mouseCoordinate  = L.Control.extend({
 
         // Masstabsfaktor auf dem Bezugsmeridian bei UTM Koordinaten m = 0.9996
         // Nordwert nw und Ostwert ew als Funktion von geographischer Breite und Laenge
-
+        var nw;
         if ( bw < 0 ) {
             nw = 10e6 + 0.9996*(g + nd*cos2*tan1*dl2/2 + nd*cos4*tan1*(5-tan2+9*etasq)*dl4/24);
         }
         else {
             nw = 0.9996*(g + nd*cos2*tan1*dl2/2 + nd*cos4*tan1*(5-tan2+9*etasq)*dl4/24);
         }
-        ew = 0.9996*( nd*cos1*dl + nd*cos3*(1-tan2+etasq)*dl3/6 + nd*cos5 *(5-18*tan2+tan4)*dl5/120) + 500000;
+        var ew = 0.9996*( nd*cos1*dl + nd*cos3*(1-tan2+etasq)*dl3/6 + nd*cos5 *(5-18*tan2+tan4)*dl5/120) + 500000;
 
-        var zone = lz+bz;
+        zone = lz+bz;
 
         var nk = nw - parseInt(nw);
         if (nk < 0.5) {
@@ -276,7 +272,7 @@ L.Control.mouseCoordinate  = L.Control.extend({
         while (nw.length < 7) {
             nw = "0" + nw;
         }
-
+        
         nk = ew - parseInt(ew);
         if (nk < 0.5) {
             ew = "0" + parseInt(ew);
@@ -482,12 +478,12 @@ L.Control.mouseCoordinate  = L.Control.extend({
         var latgrad = parseInt(gps.lat);
         var latminuten = (gps.lat - latgrad) * 60;
         var latsekunden = Math.round(((latminuten - parseInt(latminuten)) * 60) * 100) / 100;
-        var latminuten = parseInt(latminuten);
+        latminuten = parseInt(latminuten);
 
         var lnggrad = parseInt(gps.lng);
         var lngminuten = (gps.lng - lnggrad) * 60;
         var lngsekunden = Math.round(((lngminuten - parseInt(lngminuten)) * 60) * 100) /100;
-        var lngminuten = parseInt(lngminuten);
+        lngminuten = parseInt(lngminuten);
         
         return this._AddNSEW({latgrad: latgrad, latminuten: latminuten,latsekunden: latsekunden, lnggrad: lnggrad, lngminuten: lngminuten, lngsekunden: lngsekunden});
     },

@@ -78,7 +78,7 @@ L.Control.mouseCoordinate  = L.Control.extend({
             nw = "";
             return;
         }
-        band = zone.substr(2,1);
+        var band = zone.substr(2,1);
         zone = parseFloat(zone);
         ew = parseFloat(ew);
         nw = parseFloat(nw);
@@ -107,57 +107,57 @@ L.Control.mouseCoordinate  = L.Control.extend({
 
         // Entscheidung Nord-/Sued Halbkugel
         if (band >= "N"|| band === ""){
-            m_nw = nw;
+            var m_nw = nw;
         }
         else{
-            m_nw = nw - 10e6;
+            var m_nw = nw - 10e6;
         }
 
         // Geographische Breite bf zur Meridianbogenlaenge gf = m_nw
-        sigma = (m_nw/0.9996)/e0;
-        sigmr = sigma*pi/180;
-        bf = sigma + f2*Math.sin(2*sigmr) + f4*Math.sin(4*sigmr) + f6*Math.sin(6*sigmr);
+        var sigma = (m_nw/0.9996)/e0;
+        var sigmr = sigma*pi/180;
+        var bf = sigma + f2*Math.sin(2*sigmr) + f4*Math.sin(4*sigmr) + f6*Math.sin(6*sigmr);
 
         // Breite bf in Radianten
         br = bf * pi/180;
-        tan1 = Math.tan(br);
-        tan2 = tan1*tan1;
-        tan4 = tan2*tan2;
+        var tan1 = Math.tan(br);
+        var tan2 = tan1*tan1;
+        var tan4 = tan2*tan2;
 
-        cos1 = Math.cos(br);
-        cos2 = cos1*cos1;
+        var cos1 = Math.cos(br);
+        var cos2 = cos1*cos1;
 
-        etasq = ex2*cos2;
+        var etasq = ex2*cos2;
 
         // Querkruemmungshalbmesser nd
-        nd = c/Math.sqrt(1 + etasq);
-        nd2 = nd*nd;
-        nd4 = nd2*nd2;
-        nd6 = nd4*nd2;
-        nd3 = nd2*nd;
-        nd5 = nd4*nd;
+        var nd = c/Math.sqrt(1 + etasq);
+        var nd2 = nd*nd;
+        var nd4 = nd2*nd2;
+        var nd6 = nd4*nd2;
+        var nd3 = nd2*nd;
+        var nd5 = nd4*nd;
 
         // Laengendifferenz dl zum Bezugsmeridian lh
-        lh = (zone - 30)*6 - 3;
-        dy = (ew-500000)/0.9996;
-        dy2 = dy*dy;
-        dy4 = dy2*dy2;
-        dy3 = dy2*dy;
-        dy5 = dy3*dy2;
-        dy6 = dy3*dy3;
+        var lh = (zone - 30)*6 - 3;
+        var dy = (ew-500000)/0.9996;
+        var dy2 = dy*dy;
+        var dy4 = dy2*dy2;
+        var dy3 = dy2*dy;
+        var dy5 = dy3*dy2;
+        var dy6 = dy3*dy3;
 
-        b2 = - tan1*(1+etasq)/(2*nd2);
-        b4 =   tan1*(5+3*tan2+6*etasq*(1-tan2))/(24*nd4);
-        b6 = - tan1*(61+90*tan2+45*tan4)/(720*nd6);
+        var b2 = - tan1*(1+etasq)/(2*nd2);
+        var b4 =   tan1*(5+3*tan2+6*etasq*(1-tan2))/(24*nd4);
+        var b6 = - tan1*(61+90*tan2+45*tan4)/(720*nd6);
 
-        l1 =   1/(nd*cos1);
-        l3 = - (1+2*tan2+etasq)/(6*nd3*cos1);
-        l5 =   (5+28*tan2+24*tan4)/(120*nd5*cos1);
+        var l1 =   1/(nd*cos1);
+        var l3 = - (1+2*tan2+etasq)/(6*nd3*cos1);
+        var l5 =   (5+28*tan2+24*tan4)/(120*nd5*cos1);
 
         // Geographische Breite bw und Laenge lw als Funktion von Ostwert ew
         // und Nordwert nw
-        bw = bf + (180/pi) * (b2*dy2 + b4*dy4 + b6*dy6);
-        lw = lh + (180/pi) * (l1*dy  + l3*dy3 + l5*dy5);
+        var bw = bf + (180/pi) * (b2*dy2 + b4*dy4 + b6*dy6);
+        var lw = lh + (180/pi) * (l1*dy  + l3*dy3 + l5*dy5);
 
         return {lat: bw, lng: lw};
     },

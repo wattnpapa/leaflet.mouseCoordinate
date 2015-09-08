@@ -6,6 +6,12 @@ Add the .js and the .css file to your HTML
 
 Add this to your Javascript Code
 
+Bower
+----
+```
+bower install --save leaflet.mouseCoordinate
+```
+
 ```
 L.control.mouseCoordinate({utm:true,utmref:true}).addTo(map);
 ```

@@ -1,4 +1,4 @@
-[![Code Climate](https://codeclimate.com/github/PowerPan/leaflet.mouseCoordinate/badges/gpa.svg)](https://codeclimate.com/github/PowerPan/leaflet.mouseCoordinate)
+[![GitHub version](https://badge.fury.io/gh/PowerPan%2Fleaflet.mouseCoordinate.svg)](http://badge.fury.io/gh/PowerPan%2Fleaflet.mouseCoordinate) [![Code Climate](https://codeclimate.com/github/PowerPan/leaflet.mouseCoordinate/badges/gpa.svg)](https://codeclimate.com/github/PowerPan/leaflet.mouseCoordinate)
 
 Installation
 ====

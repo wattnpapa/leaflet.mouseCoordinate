@@ -11,6 +11,7 @@ Bower
 ```
 bower install --save leaflet.mouseCoordinate
 ```
+[![get this with bower](http://benschwarz.github.io/bower-badges/badge@2x.png)](http://bower.io/ "get this with bower")
 
 Usage
 ====

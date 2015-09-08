@@ -2,9 +2,9 @@
 
 Installation
 ====
-Add the .js and the .css file to your HTML
-
-Add this to your Javascript Code
+Manuell
+---
+Download the Source and add it into your Project Folder 
 
 Bower
 ----
@@ -12,6 +12,8 @@ Bower
 bower install --save leaflet.mouseCoordinate
 ```
 
+Usage
+====
 ```
 L.control.mouseCoordinate({utm:true,utmref:true}).addTo(map);
 ```

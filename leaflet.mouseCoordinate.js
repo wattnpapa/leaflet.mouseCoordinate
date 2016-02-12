@@ -161,7 +161,7 @@ L.Control.mouseCoordinate  = L.Control.extend({
         var bw = gps.lat;
         // Geographische Laenge lw und Breite bw im WGS84 Datum
         if (lw <= -180 || lw > 180 || bw <= -80 || bw >= 84){
-            alert("Werte nicht im Bereich des UTM Systems\n -180 <= LW < +180, -80 < BW < 84 N"); // jshint ignore:line
+            //alert("Werte nicht im Bereich des UTM Systems\n -180 <= LW < +180, -80 < BW < 84 N"); // jshint ignore:line
             return;
         }
         lw = parseFloat(lw);

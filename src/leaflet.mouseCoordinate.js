@@ -17,6 +17,9 @@ L.Control.mouseCoordinate  = L.Control.extend({
     },
     onAdd: function(map){
         this._map = map;
+
+        if(L.Browser.touch || L.Browser.msTouch)
+            return L.DomUtil.create('div');
         
         var className = 'leaflet-control-mouseCoordinate';
         var container = this._container = L.DomUtil.create('div',className);
@@ -24,7 +27,6 @@ L.Control.mouseCoordinate  = L.Control.extend({
         this._gpsPositionContainer = L.DomUtil.create("div","gpsPos",container);
         
         map.on("mousemove", this._update, this);
-        //map.whenReady(this._update, this);
         
         return container;
     },

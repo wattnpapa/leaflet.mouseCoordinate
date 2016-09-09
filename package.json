@@ -1,5 +1,5 @@
 {
-  "name": "leaflet-mouseCoordinate",
+  "name": "leaflet.mousecoordinate",
   "version": "1.2.0",
   "description": "A Coordinate Mouse Viewer for Leaflet",
   "publishConfig": {

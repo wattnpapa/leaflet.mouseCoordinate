@@ -55,6 +55,10 @@ L.Control.mouseCoordinate  = L.Control.extend({
             var qth = QTH.fromLatLng(gps);
             content += "<tr><td>QTH</td><td colspan='2'>"+qth+"</td></tr>";
         }
+        if(this.options.nac){
+            var nac = NAC.fromLatLng(gps);
+            content += "<tr><td>NAC</td><td colspan='2'>"+nac.y+" "+ nac.x +"</td></tr>";
+        }
             
         content += "</table>";
         this._gpsPositionContainer.innerHTML = content;

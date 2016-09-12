@@ -67,24 +67,24 @@ L.Control.mouseCoordinate  = L.Control.extend({
 
 
     _geo2geodeziminuten: function (gps){
-        var latgrad = parseInt(gps.lat);
+        var latgrad = parseInt(gps.lat,10);
         var latminuten = Math.round( ((gps.lat - latgrad) * 60) * 10000 ) / 10000;
 
-        var lnggrad = parseInt(gps.lng);
+        var lnggrad = parseInt(gps.lng,10);
         var lngminuten = Math.round( ((gps.lng - lnggrad) * 60) * 10000 ) / 10000;
 
         return this._AddNSEW({latgrad: latgrad, latminuten: latminuten, lnggrad: lnggrad, lngminuten: lngminuten});
     },
     _geo2gradminutensekunden: function (gps){
-        var latgrad = parseInt(gps.lat);
+        var latgrad = parseInt(gps.lat,10);
         var latminuten = (gps.lat - latgrad) * 60;
-        var latsekunden = Math.round(((latminuten - parseInt(latminuten)) * 60) * 100) / 100;
-        latminuten = parseInt(latminuten);
+        var latsekunden = Math.round(((latminuten - parseInt(latminuten,10)) * 60) * 100) / 100;
+        latminuten = parseInt(latminuten,10);
 
         var lnggrad = parseInt(gps.lng);
         var lngminuten = (gps.lng - lnggrad) * 60;
-        var lngsekunden = Math.round(((lngminuten - parseInt(lngminuten)) * 60) * 100) /100;
-        lngminuten = parseInt(lngminuten);
+        var lngsekunden = Math.round(((lngminuten - parseInt(lngminuten,10)) * 60) * 100) /100;
+        lngminuten = parseInt(lngminuten,10);
         
         return this._AddNSEW({latgrad: latgrad, latminuten: latminuten,latsekunden: latsekunden, lnggrad: lnggrad, lngminuten: lngminuten, lngsekunden: lngsekunden});
     },

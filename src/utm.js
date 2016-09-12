@@ -49,12 +49,12 @@ var UTM = {
         var e6 = c*( - 35*ex6/3072 + 315*ex8/12288);
 
         // Laengenzone lz und Breitenzone (Band) bz
-        var lzn = parseInt((lw+180)/6) + 1;
+        var lzn = parseInt((lw+180)/6,10) + 1;
         var lz = lzn;
         if (lzn < 10){
             lz = "0" + lzn;
         }
-        var bd = parseInt(1 + (bw + 80)/8);
+        var bd = parseInt(1 + (bw + 80)/8,10);
         var bz = b_sel.substr(bd-1,1);
 
         // Geographische Breite in Radianten br
@@ -99,24 +99,24 @@ var UTM = {
 
         var zone = lz+bz;
 
-        var nk = nw - parseInt(nw);
+        var nk = nw - parseInt(nw,10);
         if (nk < 0.5) {
-            nw = "" + parseInt(nw);
+            nw = "" + parseInt(nw,10);
         }
         else{
-            nw = "" + (parseInt(nw) + 1);
+            nw = "" + (parseInt(nw,10) + 1);
         }
 
         while (nw.length < 7) {
             nw = "0" + nw;
         }
 
-        nk = ew - parseInt(ew);
+        nk = ew - parseInt(ew,10);
         if (nk < 0.5) {
-            ew = "0" + parseInt(ew);
+            ew = "0" + parseInt(ew,10);
         }
         else {
-            ew = "0" + parseInt(ew+1);
+            ew = "0" + parseInt(ew+1,10);
         }
 
         return {zone: zone, x: ew, y: nw};

@@ -30,14 +30,14 @@ var QTH = {
 
         for (yi = 1; yi < 3; ++yi) {
             for (yk = 1; yk < 4; ++yk) {
-                if (yk != 3) {
-                    if (yi == 1) {
-                        if (yk == 1) ydiv = 20;
-                        if (yk == 2) ydiv = 2;
+                if (yk !== 3) {
+                    if (yi === 1) {
+                        if (yk === 1) ydiv = 20;
+                        if (yk === 2) ydiv = 2;
                     }
-                    if (yi == 2) {
-                        if (yk == 1) ydiv = 10;
-                        if (yk == 2) ydiv = 1;
+                    if (yi === 2) {
+                        if (yk === 1) ydiv = 10;
+                        if (yk === 2) ydiv = 1;
                     }
 
                     yres = ycalc[yi] / ydiv;
@@ -49,7 +49,7 @@ var QTH = {
                     ycalc[yi] = (ycalc[yi] - ylp) * ydiv;
                 }
                 else {
-                    if (yi == 1)
+                    if (yi === 1)
                         ydiv = 12;
                     else
                         ydiv = 24;

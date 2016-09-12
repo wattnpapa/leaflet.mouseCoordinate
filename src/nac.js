@@ -24,23 +24,13 @@ var NAC = {
         xy.y = '';
         if (lon >= -180 && lon <= 180) {
             var xlon = (lon + 180) / 360;
-            x[0] = parseInt(xlon * 30);
-            x[1] = parseInt((xlon * 30 - x[0]) * 30);
-            x[2] = parseInt(((xlon * 30 - x[0]) * 30 - x[1]) * 30);
-            x[3] = parseInt((((xlon * 30 - x[0]) * 30 - x[1]) * 30 - x[2]) * 30);
-            x[4] = parseInt(((((xlon * 30 - x[0]) * 30 - x[1]) * 30 - x[2]) * 30 - x[3]) * 30);
-            x[5] = parseInt((((((xlon * 30 - x[0]) * 30 - x[1]) * 30 - x[2]) * 30 - x[3]) * 30 - x[4]) * 30);
+            x = this._calcValues(xlon);
         } else {
             x[0] = 0;
         }
         if (lat >= -90 && lat <= 90) {
             var ylat = (lat + 90) / 180;
-            y[0] = parseInt(ylat * 30);
-            y[1] = parseInt((ylat * 30 - y[0]) * 30);
-            y[2] = parseInt(((ylat * 30 - y[0]) * 30 - y[1]) * 30);
-            y[3] = parseInt((((ylat * 30 - y[0]) * 30 - y[1]) * 30 - y[2]) * 30);
-            y[4] = parseInt(((((ylat * 30 - y[0]) * 30 - y[1]) * 30 - y[2]) * 30 - y[3]) * 30);
-            y[5] = parseInt((((((ylat * 30 - y[0]) * 30 - y[1]) * 30 - y[2]) * 30 - y[3]) * 30 - y[4]) * 30);
+            y = this._calcValues(ylat);
         } else {
             y[0] = 0;
         }
@@ -51,6 +41,23 @@ var NAC = {
             xy.y += this._nac2Letter(y[i]);
         }
         return xy;
+    },
+
+    /**
+     * 
+     * @param z
+     * @returns {Array}
+     * @private
+     */
+    _calcValues: function (z){
+        var ret = [];
+        ret[0] = parseInt(z * 30,10);
+        ret[1] = parseInt((z * 30 - ret[0]) * 30,10);
+        ret[2] = parseInt(((z * 30 - ret[0]) * 30 - ret[1]) * 30,10);
+        ret[3] = parseInt((((z * 30 - ret[0]) * 30 - ret[1]) * 30 - ret[2]) * 30,10);
+        ret[4] = parseInt(((((z * 30 - ret[0]) * 30 - ret[1]) * 30 - ret[2]) * 30 - ret[3]) * 30,10);
+        ret[5] = parseInt((((((z * 30 - ret[0]) * 30 - ret[1]) * 30 - ret[2]) * 30 - ret[3]) * 30 - ret[4]) * 30,10);
+        return ret;
     },
 
     /**

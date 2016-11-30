@@ -54,6 +54,36 @@ var UTM = {
         if (lzn < 10){
             lz = "0" + lzn;
         }
+
+        //Chunk of code from  https://github.com/proj4js/mgrs/blob/e43d7d644564c09831587a5f01c911caae991d8c/mgrs.js#L128-L147
+        //MIT License
+        //Copyright (c) 2012, Mike Adair, Richard Greenwood, Didier Richard, Stephen Irons, Olivier Terral, Calvin Metcalf
+        //
+        //Portions of this software are based on a port of components from the OpenMap com.bbn.openmap.proj.coords Java package. An initial port was initially created by Patrice G. Cappelaere and included in Community Mapbuilder (http://svn.codehaus.org/mapbuilder/), which is licensed under the LGPL license as per http://www.gnu.org/copyleft/lesser.html. OpenMap is licensed under the following license agreement:
+
+        // Special zone for Norway
+        if (bw >= 56.0 && bw < 64.0 && lw >= 3.0 && lw < 12.0) {
+            lz = 32;
+        }
+
+        // Special zones for Svalbard
+        if (bw >= 72.0 && bw < 84.0) {
+            if (lw >= 0.0 && lw < 9.0) {
+                lz = 31;
+            }
+            else if (lw >= 9.0 && lw < 21.0) {
+                lz = 33;
+            }
+            else if (lw >= 21.0 && lw < 33.0) {
+                lz = 35;
+            }
+            else if (lw >= 33.0 && lw < 42.0) {
+                lz = 37;
+            }
+        }
+        //End part of code from proj4js/mgrs
+
+
         var bd = parseInt(1 + (bw + 80)/8,10);
         var bz = b_sel.substr(bd-1,1);
 

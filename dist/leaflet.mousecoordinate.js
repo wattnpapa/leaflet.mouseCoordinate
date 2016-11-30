@@ -5,6 +5,7 @@
 L.Control.mouseCoordinate  = L.Control.extend({
     options: {
         gps: true,
+        gpsLong: true,
         utm: false,
         utmref: false,
         position: 'bottomright',
@@ -37,11 +38,13 @@ L.Control.mouseCoordinate  = L.Control.extend({
         var content = "<table>";
         if(this.options.gps){
             content += "<tr><td>GPS</td><td>" + lat + "</td><td> " + lng +"</td></tr>";
-            var gpsMinuten = this._geo2geodeziminuten(gps);
-            content += "<tr><td></td><td class='coords'>"+ gpsMinuten.NS + " " + gpsMinuten.latgrad + "&deg; "+ gpsMinuten.latminuten+"</td><td class='coords'> " + gpsMinuten.WE + " "+ gpsMinuten.lnggrad +"&deg; "+ gpsMinuten.latminuten +"</td></tr>";
-            var gpsMinutenSekunden = this._geo2gradminutensekunden(gps);
-            content += "<tr><td></td><td>"+ gpsMinutenSekunden.NS + " " + gpsMinutenSekunden.latgrad + "&deg; "+ gpsMinutenSekunden.latminuten + "&prime; "+ gpsMinutenSekunden.latsekunden+"&Prime;</td><td> " + gpsMinutenSekunden.WE + " "+ gpsMinutenSekunden.lnggrad +"&deg; "+ gpsMinutenSekunden.latminuten + "&prime; "+ gpsMinutenSekunden.lngsekunden+"&Prime;</td></tr>";
-            
+            if(this.options.gpsLong){
+                var gpsMinuten = this._geo2geodeziminuten(gps);
+                content += "<tr><td></td><td class='coords'>"+ gpsMinuten.NS + " " + gpsMinuten.latgrad + "&deg; "+ gpsMinuten.latminuten+"</td><td class='coords'> " + gpsMinuten.WE + " "+ gpsMinuten.lnggrad +"&deg; "+ gpsMinuten.latminuten +"</td></tr>";
+                var gpsMinutenSekunden = this._geo2gradminutensekunden(gps);
+                content += "<tr><td></td><td>"+ gpsMinutenSekunden.NS + " " + gpsMinutenSekunden.latgrad + "&deg; "+ gpsMinutenSekunden.latminuten + "&prime; "+ gpsMinutenSekunden.latsekunden+"&Prime;</td><td> " + gpsMinutenSekunden.WE + " "+ gpsMinutenSekunden.lnggrad +"&deg; "+ gpsMinutenSekunden.latminuten + "&prime; "+ gpsMinutenSekunden.lngsekunden+"&Prime;</td></tr>";
+                
+            }
         }
         if(this.options.utm){
             var utm = UTM.fromLatLng(gps);
@@ -67,24 +70,24 @@ L.Control.mouseCoordinate  = L.Control.extend({
 
 
     _geo2geodeziminuten: function (gps){
-        var latgrad = parseInt(gps.lat);
+        var latgrad = parseInt(gps.lat,10);
         var latminuten = Math.round( ((gps.lat - latgrad) * 60) * 10000 ) / 10000;
 
-        var lnggrad = parseInt(gps.lng);
+        var lnggrad = parseInt(gps.lng,10);
         var lngminuten = Math.round( ((gps.lng - lnggrad) * 60) * 10000 ) / 10000;
 
         return this._AddNSEW({latgrad: latgrad, latminuten: latminuten, lnggrad: lnggrad, lngminuten: lngminuten});
     },
     _geo2gradminutensekunden: function (gps){
-        var latgrad = parseInt(gps.lat);
+        var latgrad = parseInt(gps.lat,10);
         var latminuten = (gps.lat - latgrad) * 60;
-        var latsekunden = Math.round(((latminuten - parseInt(latminuten)) * 60) * 100) / 100;
-        latminuten = parseInt(latminuten);
+        var latsekunden = Math.round(((latminuten - parseInt(latminuten,10)) * 60) * 100) / 100;
+        latminuten = parseInt(latminuten,10);
 
         var lnggrad = parseInt(gps.lng);
         var lngminuten = (gps.lng - lnggrad) * 60;
-        var lngsekunden = Math.round(((lngminuten - parseInt(lngminuten)) * 60) * 100) /100;
-        lngminuten = parseInt(lngminuten);
+        var lngsekunden = Math.round(((lngminuten - parseInt(lngminuten,10)) * 60) * 100) /100;
+        lngminuten = parseInt(lngminuten,10);
         
         return this._AddNSEW({latgrad: latgrad, latminuten: latminuten,latsekunden: latsekunden, lnggrad: lnggrad, lngminuten: lngminuten, lngsekunden: lngsekunden});
     },
@@ -133,23 +136,13 @@ var NAC = {
         xy.y = '';
         if (lon >= -180 && lon <= 180) {
             var xlon = (lon + 180) / 360;
-            x[0] = parseInt(xlon * 30);
-            x[1] = parseInt((xlon * 30 - x[0]) * 30);
-            x[2] = parseInt(((xlon * 30 - x[0]) * 30 - x[1]) * 30);
-            x[3] = parseInt((((xlon * 30 - x[0]) * 30 - x[1]) * 30 - x[2]) * 30);
-            x[4] = parseInt(((((xlon * 30 - x[0]) * 30 - x[1]) * 30 - x[2]) * 30 - x[3]) * 30);
-            x[5] = parseInt((((((xlon * 30 - x[0]) * 30 - x[1]) * 30 - x[2]) * 30 - x[3]) * 30 - x[4]) * 30);
+            x = this._calcValues(xlon);
         } else {
             x[0] = 0;
         }
         if (lat >= -90 && lat <= 90) {
             var ylat = (lat + 90) / 180;
-            y[0] = parseInt(ylat * 30);
-            y[1] = parseInt((ylat * 30 - y[0]) * 30);
-            y[2] = parseInt(((ylat * 30 - y[0]) * 30 - y[1]) * 30);
-            y[3] = parseInt((((ylat * 30 - y[0]) * 30 - y[1]) * 30 - y[2]) * 30);
-            y[4] = parseInt(((((ylat * 30 - y[0]) * 30 - y[1]) * 30 - y[2]) * 30 - y[3]) * 30);
-            y[5] = parseInt((((((ylat * 30 - y[0]) * 30 - y[1]) * 30 - y[2]) * 30 - y[3]) * 30 - y[4]) * 30);
+            y = this._calcValues(ylat);
         } else {
             y[0] = 0;
         }
@@ -160,6 +153,23 @@ var NAC = {
             xy.y += this._nac2Letter(y[i]);
         }
         return xy;
+    },
+
+    /**
+     * 
+     * @param z
+     * @returns {Array}
+     * @private
+     */
+    _calcValues: function (z){
+        var ret = [];
+        ret[0] = parseInt(z * 30,10);
+        ret[1] = parseInt((z * 30 - ret[0]) * 30,10);
+        ret[2] = parseInt(((z * 30 - ret[0]) * 30 - ret[1]) * 30,10);
+        ret[3] = parseInt((((z * 30 - ret[0]) * 30 - ret[1]) * 30 - ret[2]) * 30,10);
+        ret[4] = parseInt(((((z * 30 - ret[0]) * 30 - ret[1]) * 30 - ret[2]) * 30 - ret[3]) * 30,10);
+        ret[5] = parseInt((((((z * 30 - ret[0]) * 30 - ret[1]) * 30 - ret[2]) * 30 - ret[3]) * 30 - ret[4]) * 30,10);
+        return ret;
     },
 
     /**
@@ -207,14 +217,14 @@ var QTH = {
 
         for (yi = 1; yi < 3; ++yi) {
             for (yk = 1; yk < 4; ++yk) {
-                if (yk != 3) {
-                    if (yi == 1) {
-                        if (yk == 1) ydiv = 20;
-                        if (yk == 2) ydiv = 2;
+                if (yk !== 3) {
+                    if (yi === 1) {
+                        if (yk === 1) ydiv = 20;
+                        if (yk === 2) ydiv = 2;
                     }
-                    if (yi == 2) {
-                        if (yk == 1) ydiv = 10;
-                        if (yk == 2) ydiv = 1;
+                    if (yi === 2) {
+                        if (yk === 1) ydiv = 10;
+                        if (yk === 2) ydiv = 1;
                     }
 
                     yres = ycalc[yi] / ydiv;
@@ -226,7 +236,7 @@ var QTH = {
                     ycalc[yi] = (ycalc[yi] - ylp) * ydiv;
                 }
                 else {
-                    if (yi == 1)
+                    if (yi === 1)
                         ydiv = 12;
                     else
                         ydiv = 24;
@@ -300,12 +310,42 @@ var UTM = {
         var e6 = c*( - 35*ex6/3072 + 315*ex8/12288);
 
         // Laengenzone lz und Breitenzone (Band) bz
-        var lzn = parseInt((lw+180)/6) + 1;
+        var lzn = parseInt((lw+180)/6,10) + 1;
         var lz = lzn;
         if (lzn < 10){
             lz = "0" + lzn;
         }
-        var bd = parseInt(1 + (bw + 80)/8);
+
+        //Chunk of code from  https://github.com/proj4js/mgrs/blob/e43d7d644564c09831587a5f01c911caae991d8c/mgrs.js#L128-L147
+        //MIT License
+        //Copyright (c) 2012, Mike Adair, Richard Greenwood, Didier Richard, Stephen Irons, Olivier Terral, Calvin Metcalf
+        //
+        //Portions of this software are based on a port of components from the OpenMap com.bbn.openmap.proj.coords Java package. An initial port was initially created by Patrice G. Cappelaere and included in Community Mapbuilder (http://svn.codehaus.org/mapbuilder/), which is licensed under the LGPL license as per http://www.gnu.org/copyleft/lesser.html. OpenMap is licensed under the following license agreement:
+
+        // Special zone for Norway
+        if (bw >= 56.0 && bw < 64.0 && lw >= 3.0 && lw < 12.0) {
+            lz = 32;
+        }
+
+        // Special zones for Svalbard
+        if (bw >= 72.0 && bw < 84.0) {
+            if (lw >= 0.0 && lw < 9.0) {
+                lz = 31;
+            }
+            else if (lw >= 9.0 && lw < 21.0) {
+                lz = 33;
+            }
+            else if (lw >= 21.0 && lw < 33.0) {
+                lz = 35;
+            }
+            else if (lw >= 33.0 && lw < 42.0) {
+                lz = 37;
+            }
+        }
+        //End part of code from proj4js/mgrs
+
+
+        var bd = parseInt(1 + (bw + 80)/8,10);
         var bz = b_sel.substr(bd-1,1);
 
         // Geographische Breite in Radianten br
@@ -350,24 +390,24 @@ var UTM = {
 
         var zone = lz+bz;
 
-        var nk = nw - parseInt(nw);
+        var nk = nw - parseInt(nw,10);
         if (nk < 0.5) {
-            nw = "" + parseInt(nw);
+            nw = "" + parseInt(nw,10);
         }
         else{
-            nw = "" + (parseInt(nw) + 1);
+            nw = "" + (parseInt(nw,10) + 1);
         }
 
         while (nw.length < 7) {
             nw = "0" + nw;
         }
 
-        nk = ew - parseInt(ew);
+        nk = ew - parseInt(ew,10);
         if (nk < 0.5) {
-            ew = "0" + parseInt(ew);
+            ew = "0" + parseInt(ew,10);
         }
         else {
-            ew = "0" + parseInt(ew+1);
+            ew = "0" + parseInt(ew+1,10);
         }
 
         return {zone: zone, x: ew, y: nw};
@@ -475,7 +515,8 @@ var UTM = {
 
         return {lat: bw, lng: lw};
     }
-};;/**
+};
+;/**
  * Created by Johannes Rudolph <johannes.rudolph@gmx.com> on 01.09.2016.
  */
 

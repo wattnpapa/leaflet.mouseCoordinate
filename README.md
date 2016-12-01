@@ -23,9 +23,10 @@ Options
 ====
 | Option | Type    | Default | Description |
 |--------|---------|---------|-------------|
-| gps    | Boolean | true    | Show GPS Coordinates in 3 Forms:  ddd.ddddd / ddd mm.mmm / ddd mm ss.s | 
+| gps    | Boolean | true    | Show GPS Coordinates in 1 Form:  ddd.ddddd                             |
+| gpsLong| Boolean | true    | Show GPS Coordinates in 3 Forms:  ddd.ddddd / ddd mm.mmm / ddd mm ss.s |
 | utm    | Boolean | false   | Show [UTM Coordinates] (https://en.wikipedia.org/wiki/Universal_Transverse_Mercator_coordinate_system)            |
-| utmref | Boolean | false   | Show [UTMREF/MGRS Coordinates] (https://en.wikipedia.org/wiki/Military_grid_reference_system)            | 
+| utmref | Boolean | false   | Show [UTMREF/MGRS/USNG Coordinates] (https://en.wikipedia.org/wiki/Military_grid_reference_system)            |
 | qth    | Boolean | false   | Show [QTH/Maidenhead Locator] (https://en.wikipedia.org/wiki/Maidenhead_Locator_System)            |
 | nac    | Boolean | false   | Show [Natural Area Code] (https://en.wikipedia.org/wiki/Natural_Area_Code)           |
 | position | String | 'bottomright'   | The initial position of the control (one of the map corners). See [control positions](http://leafletjs.com/reference.html#control-positions).     |

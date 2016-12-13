@@ -39,5 +39,8 @@
     "grunt-mocha-test": "0.12.7",
     "grunt-jsdoc": "^2.1.0",
     "mocha": "3.0.2"
+  },
+  "dependencies": {
+    "leaflet": "^1.0.2"
   }
 }

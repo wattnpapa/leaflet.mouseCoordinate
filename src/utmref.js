@@ -16,6 +16,10 @@ var UTMREF = {
     fromUTM: function (utm) {
         // Copyright (c) 2006, HELMUT H. HEIMEIER
 
+        if(utm === undefined){
+            return;
+        }
+
         var zone = utm.zone;
         var ew = utm.x;
         var nw = utm.y;

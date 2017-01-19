@@ -19,7 +19,7 @@ L.Control.mouseCoordinate  = L.Control.extend({
     onAdd: function(map){
         this._map = map;
 
-        if(L.Browser.touch || L.Browser.msTouch)
+        if(L.Browser.mobile || L.Browser.mobileWebkit || L.Browser.mobileWebkit3d || L.Browser.mobileOpera || L.Browser.mobileGecko)
             return L.DomUtil.create('div');
         
         var className = 'leaflet-control-mouseCoordinate';

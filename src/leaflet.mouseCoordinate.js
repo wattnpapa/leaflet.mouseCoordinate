@@ -99,7 +99,7 @@ L.Control.mouseCoordinate  = L.Control.extend({
         }
         if(coord.lnggrad < 0){
             coord.lnggrad = coord.lnggrad * (-1);
-            coord.EW = "W";
+            coord.WE = "W";
         }
         return coord;
     },

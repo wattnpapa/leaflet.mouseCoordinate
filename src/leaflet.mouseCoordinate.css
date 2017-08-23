@@ -2,7 +2,7 @@
     Author     : Johannes Rudolph
 */
 
-.leaflet-control-mouseCoordinate{
+.leaflet-control-mouseCoordinate {
     width: 250px;
     min-height: 30px;
     text-align: left;

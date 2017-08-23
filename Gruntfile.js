@@ -8,12 +8,12 @@ module.exports = function (grunt) {
 
         concat: {
           options: {
-            separator: ';',
+            separator: ';'
           },
           dist: {
             src: ['src/*.js'],
-            dest: 'dist/<%= pkg.name %>.js',
-          },
+            dest: 'dist/<%= pkg.name %>.js'
+          }
         },
 
         jshint: {
@@ -35,7 +35,7 @@ module.exports = function (grunt) {
         csslint: {
             strict: {
                 src: ['src/*.css']
-            },
+            }
         },
 
         jsdoc : {

@@ -24,23 +24,20 @@
   },
   "homepage": "https://github.com/PowerPan/leaflet.mouseCoordinate#readme",
   "devDependencies": {
-    "grunt": "~0.4.1",
-    "grunt-browserify": "5.0.0",
-    "grunt-concat-css": "0.3.1",
+    "grunt": "~1.0.1",
+    "grunt-browserify": "5.2.0",
+    "grunt-concat-css": "0.3.2",
     "grunt-contrib-concat": "1.0.1",
-    "grunt-contrib-csslint": "1.0.0",
-    "grunt-contrib-cssmin": "1.0.2",
-    "grunt-contrib-jshint": "1.0.0",
-    "grunt-contrib-qunit": "1.2.0",
-    "grunt-contrib-uglify": "2.0.0",
+    "grunt-contrib-csslint": "2.0.0",
+    "grunt-contrib-cssmin": "2.2.1",
+    "grunt-contrib-jshint": "1.1.0",
+    "grunt-contrib-qunit": "2.0.0",
+    "grunt-contrib-uglify": "3.0.1",
     "grunt-contrib-yuidoc": "1.0.0",
     "grunt-env": "0.4.4",
-    "grunt-istanbul": "0.7.1",
-    "grunt-mocha-test": "0.12.7",
+    "grunt-istanbul": "0.8.0",
+    "grunt-mocha-test": "0.13.2",
     "grunt-jsdoc": "^2.1.0",
-    "mocha": "3.0.2"
-  },
-  "dependencies": {
-    "leaflet": "^1.0.2"
+    "mocha": "3.5.0"
   }
 }

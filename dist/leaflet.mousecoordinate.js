@@ -19,7 +19,7 @@ L.Control.mouseCoordinate  = L.Control.extend({
     onAdd: function(map){
         this._map = map;
 
-        if(L.Browser.touch || L.Browser.msTouch)
+        if(L.Browser.mobile || L.Browser.mobileWebkit || L.Browser.mobileWebkit3d || L.Browser.mobileOpera || L.Browser.mobileGecko)
             return L.DomUtil.create('div');
         
         var className = 'leaflet-control-mouseCoordinate';
@@ -54,21 +54,21 @@ L.Control.mouseCoordinate  = L.Control.extend({
             content += "<tr><td>GPS</td><td>" + dLat + "</td><td> " + dLng +"</td></tr>";
             if(this.options.gpsLong){
                 var gpsMinuten = this._geo2geodeziminuten(gps);
-                content += "<tr><td></td><td class='coords'>"+ gpsMinuten.NS + " " + gpsMinuten.dLatgrad + "&deg; "+ gpsMinuten.dLatminuten+"</td><td class='coords'> " + gpsMinuten.WE + " "+ gpsMinuten.dLnggrad +"&deg; "+ gpsMinuten.dLatminuten +"</td></tr>";
+                content += "<tr><td></td><td class='coords'>"+ gpsMinuten.NS + " " + gpsMinuten.latgrad + "&deg; "+ gpsMinuten.latminuten+"</td><td class='coords'> " + gpsMinuten.WE + " "+ gpsMinuten.lnggrad +"&deg; "+ gpsMinuten.lngminuten +"</td></tr>";
                 var gpsMinutenSekunden = this._geo2gradminutensekunden(gps);
-                content += "<tr><td></td><td>"+ gpsMinutenSekunden.NS + " " + gpsMinutenSekunden.dLatgrad + "&deg; "+ gpsMinutenSekunden.dLatminuten + "&prime; "+ gpsMinutenSekunden.dLatsekunden+"&Prime;</td><td> " + gpsMinutenSekunden.WE + " "+ gpsMinutenSekunden.dLnggrad +"&deg; "+ gpsMinutenSekunden.dLatminuten + "&prime; "+ gpsMinutenSekunden.dLngsekunden+"&Prime;</td></tr>";
+                content += "<tr><td></td><td>"+ gpsMinutenSekunden.NS + " " + gpsMinutenSekunden.latgrad + "&deg; "+ gpsMinutenSekunden.latminuten + "&prime; "+ gpsMinutenSekunden.latsekunden+"&Prime;</td><td> " + gpsMinutenSekunden.WE + " "+ gpsMinutenSekunden.lnggrad +"&deg; "+ gpsMinutenSekunden.lngminuten + "&prime; "+ gpsMinutenSekunden.lngsekunden+"&Prime;</td></tr>";
             }
         }
         if(this.options.utm){
             var utm = UTM.fromLatLng(gps);
             if(utm !== undefined){
-                content += "<tr><td>UTM</td><td colspan='2'>"+utm.zone+"&nbsp;" +utm.x+"&nbsp;" +utm.y+"</td></tr>"; 
+                content += "<tr><td>UTM</td><td colspan='2'>"+utm.zone+"&nbsp;" +utm.x+"&nbsp;" +utm.y+"</td></tr>";
             }
         }
         if(this.options.utmref){
             var utmref = UTMREF.fromUTM(UTM.fromLatLng(gps));
             if(utmref !== undefined){
-                content += "<tr><td>UTM REF</td><td colspan='2'>"+utmref.zone+"&nbsp;" +utmref.band+"&nbsp;" +utmref.x+"&nbsp;" +utmref.y+"</td></tr>"; 
+                content += "<tr><td>UTM REF</td><td colspan='2'>"+utmref.zone+"&nbsp;" +utmref.band+"&nbsp;" +utmref.x+"&nbsp;" +utmref.y+"</td></tr>";
             }
         }
         if(this.options.qth){
@@ -101,7 +101,7 @@ L.Control.mouseCoordinate  = L.Control.extend({
         var latsekunden = Math.round(((latminuten - parseInt(latminuten,10)) * 60) * 100) / 100;
         latminuten = parseInt(latminuten,10);
 
-        var lnggrad = parseInt(gps.lng);
+        var lnggrad = parseInt(gps.lng,10);
         var lngminuten = (gps.lng - lnggrad) * 60;
         var lngsekunden = Math.round(((lngminuten - parseInt(lngminuten,10)) * 60) * 100) /100;
         lngminuten = parseInt(lngminuten,10);
@@ -117,10 +117,10 @@ L.Control.mouseCoordinate  = L.Control.extend({
         }
         if(coord.lnggrad < 0){
             coord.lnggrad = coord.lnggrad * (-1);
-            coord.EW = "W";
+            coord.WE = "W";
         }
         return coord;
-    },
+    }
 
 });
 
@@ -303,15 +303,15 @@ var UTM = {
          **/
         var lw = latlng.lng;
         var bw = latlng.lat;
-        if(lw == -180)
+        if(lw === -180)
             lw += 1e-13;//Number.MIN_VALUE;
-        if(lw == 180)
+        if(lw === 180)
             lw -= 1e-13;//umber.MIN_VALUE;
-        if(bw == -90)  bw += 1e-13;//umber.MIN_VALUE;
-        if(bw == 90)   bw -= 1e-13;//umber.MIN_VALUE;
+        if(bw === -90)  bw += 1e-13;//umber.MIN_VALUE;
+        if(bw === 90)   bw -= 1e-13;//umber.MIN_VALUE;
         // Geographische Laenge lw und Breite bw im WGS84 Datum
         if (lw <= -180 || lw >= 180 || bw <= -80 || bw >= 84){
-            console.error("Out of UTM bounds, which are LIES. UTM uses AB and YZ for south and north poles, it's not out of bounds.");
+            console.error("Out of lw <= -180 || lw >= 180 || bw <= -80 || bw >= 84 bounds, which is kinda similar to UTM bounds, if you ignore the poles");
             //alert("Werte nicht im Bereich des UTM Systems\n -180 <= LW < +180, -80 < BW < 84 N"); // jshint ignore:line
             return;
         }
@@ -576,17 +576,17 @@ var UTMREF = {
         // Laengenzone zone, Ostwert ew und Nordwert nw im WGS84 Datum
         var z1 = zone.substr(0, 2);
         var z2 = zone.substr(2, 1);
-        var ew1 = parseInt(ew.substr(0, 2));
-        var nw1 = parseInt(nw.substr(0, 2));
+        var ew1 = parseInt(ew.substr(0, 2),10);
+        var nw1 = parseInt(nw.substr(0, 2),10);
         var ew2 = ew.substr(2, 5);
         var nw2 = nw.substr(2, 5);
 
         var m_east = 'ABCDEFGHJKLMNPQRSTUVWXYZ';
         var m_north = 'ABCDEFGHJKLMNPQRSTUV';
 
-        if (z1 < "01" || z1 > "60" || z2 < "C" || z2 > "X") {
+        /*if (z1 < "01" || z1 > "60" || z2 < "C" || z2 > "X") {
             alert(z1 + z2 + " ist keine gueltige UTM Zonenangabe"); // jshint ignore:line
-        }
+        }*/
 
         var m_ce;
         var i = z1 % 3;
@@ -644,7 +644,7 @@ var UTMREF = {
         var r_east = mgr.band.substr(0, 1);
         var r_north = mgr.band.substr(1, 1);
 
-        var i = parseInt(zone.substr(0, 2)) % 3;
+        var i = parseInt(zone.substr(0, 2),10) % 3;
         var m_ce;
         if (i === 0) {
             m_ce = m_east_0.indexOf(r_east) + 1;

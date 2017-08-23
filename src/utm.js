@@ -25,12 +25,12 @@ var UTM = {
          **/
         var lw = latlng.lng;
         var bw = latlng.lat;
-        if(lw == -180)
+        if(lw === -180)
             lw += 1e-13;//Number.MIN_VALUE;
-        if(lw == 180)
+        if(lw === 180)
             lw -= 1e-13;//umber.MIN_VALUE;
-        if(bw == -90)  bw += 1e-13;//umber.MIN_VALUE;
-        if(bw == 90)   bw -= 1e-13;//umber.MIN_VALUE;
+        if(bw === -90)  bw += 1e-13;//umber.MIN_VALUE;
+        if(bw === 90)   bw -= 1e-13;//umber.MIN_VALUE;
         // Geographische Laenge lw und Breite bw im WGS84 Datum
         if (lw <= -180 || lw >= 180 || bw <= -80 || bw >= 84){
             console.error("Out of lw <= -180 || lw >= 180 || bw <= -80 || bw >= 84 bounds, which is kinda similar to UTM bounds, if you ignore the poles");

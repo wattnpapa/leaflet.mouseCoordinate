@@ -27,17 +27,17 @@ var UTMREF = {
         // Laengenzone zone, Ostwert ew und Nordwert nw im WGS84 Datum
         var z1 = zone.substr(0, 2);
         var z2 = zone.substr(2, 1);
-        var ew1 = parseInt(ew.substr(0, 2));
-        var nw1 = parseInt(nw.substr(0, 2));
+        var ew1 = parseInt(ew.substr(0, 2),10);
+        var nw1 = parseInt(nw.substr(0, 2),10);
         var ew2 = ew.substr(2, 5);
         var nw2 = nw.substr(2, 5);
 
         var m_east = 'ABCDEFGHJKLMNPQRSTUVWXYZ';
         var m_north = 'ABCDEFGHJKLMNPQRSTUV';
 
-        if (z1 < "01" || z1 > "60" || z2 < "C" || z2 > "X") {
+        /*if (z1 < "01" || z1 > "60" || z2 < "C" || z2 > "X") {
             alert(z1 + z2 + " ist keine gueltige UTM Zonenangabe"); // jshint ignore:line
-        }
+        }*/
 
         var m_ce;
         var i = z1 % 3;
@@ -95,7 +95,7 @@ var UTMREF = {
         var r_east = mgr.band.substr(0, 1);
         var r_north = mgr.band.substr(1, 1);
 
-        var i = parseInt(zone.substr(0, 2)) % 3;
+        var i = parseInt(zone.substr(0, 2),10) % 3;
         var m_ce;
         if (i === 0) {
             m_ce = m_east_0.indexOf(r_east) + 1;

@@ -101,7 +101,7 @@ L.Control.mouseCoordinate  = L.Control.extend({
         var latsekunden = Math.round(((latminuten - parseInt(latminuten,10)) * 60) * 100) / 100;
         latminuten = parseInt(latminuten,10);
 
-        var lnggrad = parseInt(gps.lng);
+        var lnggrad = parseInt(gps.lng,10);
         var lngminuten = (gps.lng - lnggrad) * 60;
         var lngsekunden = Math.round(((lngminuten - parseInt(lngminuten,10)) * 60) * 100) /100;
         lngminuten = parseInt(lngminuten,10);
@@ -120,7 +120,7 @@ L.Control.mouseCoordinate  = L.Control.extend({
             coord.WE = "W";
         }
         return coord;
-    },
+    }
 
 });
 

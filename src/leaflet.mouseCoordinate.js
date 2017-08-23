@@ -54,9 +54,9 @@ L.Control.mouseCoordinate  = L.Control.extend({
             content += "<tr><td>GPS</td><td>" + dLat + "</td><td> " + dLng +"</td></tr>";
             if(this.options.gpsLong){
                 var gpsMinuten = this._geo2geodeziminuten(gps);
-                content += "<tr><td></td><td class='coords'>"+ gpsMinuten.NS + " " + gpsMinuten.dLatgrad + "&deg; "+ gpsMinuten.dLatminuten+"</td><td class='coords'> " + gpsMinuten.WE + " "+ gpsMinuten.dLnggrad +"&deg; "+ gpsMinuten.dLatminuten +"</td></tr>";
+                content += "<tr><td></td><td class='coords'>"+ gpsMinuten.NS + " " + gpsMinuten.latgrad + "&deg; "+ gpsMinuten.latminuten+"</td><td class='coords'> " + gpsMinuten.WE + " "+ gpsMinuten.lnggrad +"&deg; "+ gpsMinuten.lngminuten +"</td></tr>";
                 var gpsMinutenSekunden = this._geo2gradminutensekunden(gps);
-                content += "<tr><td></td><td>"+ gpsMinutenSekunden.NS + " " + gpsMinutenSekunden.dLatgrad + "&deg; "+ gpsMinutenSekunden.dLatminuten + "&prime; "+ gpsMinutenSekunden.dLatsekunden+"&Prime;</td><td> " + gpsMinutenSekunden.WE + " "+ gpsMinutenSekunden.dLnggrad +"&deg; "+ gpsMinutenSekunden.dLatminuten + "&prime; "+ gpsMinutenSekunden.dLngsekunden+"&Prime;</td></tr>";
+                content += "<tr><td></td><td>"+ gpsMinutenSekunden.NS + " " + gpsMinutenSekunden.latgrad + "&deg; "+ gpsMinutenSekunden.latminuten + "&prime; "+ gpsMinutenSekunden.latsekunden+"&Prime;</td><td> " + gpsMinutenSekunden.WE + " "+ gpsMinutenSekunden.lnggrad +"&deg; "+ gpsMinutenSekunden.lngminuten + "&prime; "+ gpsMinutenSekunden.lngsekunden+"&Prime;</td></tr>";
             }
         }
         if(this.options.utm){

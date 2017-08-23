@@ -32,26 +32,44 @@ L.Control.mouseCoordinate  = L.Control.extend({
         return container;
     },
     _update: function(e){
-        var lat = Math.round(e.latlng.lat * 100000) / 100000 ;
-        var lng = Math.round(e.latlng.lng * 100000) / 100000 ;
+        //lat: [-90,90]
+        //lng: [-180,180]
+        var lat = (e.latlng.lat+90)%180;
+        var lng = (e.latlng.lng+180)%360;
+        if(lat < 0){
+            lat += 180;
+        }
+        lat -=90;
+        if(lng < 0){
+            lng+= 360;
+        }
+        lng -= 180;
+
         var gps = {lat: lat,lng: lng};
         var content = "<table>";
         if(this.options.gps){
-            content += "<tr><td>GPS</td><td>" + lat + "</td><td> " + lng +"</td></tr>";
+            //Round for display only
+            var dLat = Math.round(lat * 100000) / 100000;
+            var dLng = Math.round(lng * 100000) / 100000;
+            content += "<tr><td>GPS</td><td>" + dLat + "</td><td> " + dLng +"</td></tr>";
             if(this.options.gpsLong){
                 var gpsMinuten = this._geo2geodeziminuten(gps);
-                content += "<tr><td></td><td class='coords'>"+ gpsMinuten.NS + " " + gpsMinuten.latgrad + "&deg; "+ gpsMinuten.latminuten+"</td><td class='coords'> " + gpsMinuten.WE + " "+ gpsMinuten.lnggrad +"&deg; "+ gpsMinuten.latminuten +"</td></tr>";
+                content += "<tr><td></td><td class='coords'>"+ gpsMinuten.NS + " " + gpsMinuten.dLatgrad + "&deg; "+ gpsMinuten.dLatminuten+"</td><td class='coords'> " + gpsMinuten.WE + " "+ gpsMinuten.dLnggrad +"&deg; "+ gpsMinuten.dLatminuten +"</td></tr>";
                 var gpsMinutenSekunden = this._geo2gradminutensekunden(gps);
-                content += "<tr><td></td><td>"+ gpsMinutenSekunden.NS + " " + gpsMinutenSekunden.latgrad + "&deg; "+ gpsMinutenSekunden.latminuten + "&prime; "+ gpsMinutenSekunden.latsekunden+"&Prime;</td><td> " + gpsMinutenSekunden.WE + " "+ gpsMinutenSekunden.lnggrad +"&deg; "+ gpsMinutenSekunden.latminuten + "&prime; "+ gpsMinutenSekunden.lngsekunden+"&Prime;</td></tr>";
+                content += "<tr><td></td><td>"+ gpsMinutenSekunden.NS + " " + gpsMinutenSekunden.dLatgrad + "&deg; "+ gpsMinutenSekunden.dLatminuten + "&prime; "+ gpsMinutenSekunden.dLatsekunden+"&Prime;</td><td> " + gpsMinutenSekunden.WE + " "+ gpsMinutenSekunden.dLnggrad +"&deg; "+ gpsMinutenSekunden.dLatminuten + "&prime; "+ gpsMinutenSekunden.dLngsekunden+"&Prime;</td></tr>";
             }
         }
         if(this.options.utm){
             var utm = UTM.fromLatLng(gps);
-            content += "<tr><td>UTM</td><td colspan='2'>"+utm.zone+"&nbsp;" +utm.x+"&nbsp;" +utm.y+"</td></tr>"; 
+            if(utm !== undefined){
+                content += "<tr><td>UTM</td><td colspan='2'>"+utm.zone+"&nbsp;" +utm.x+"&nbsp;" +utm.y+"</td></tr>";
+            }
         }
         if(this.options.utmref){
             var utmref = UTMREF.fromUTM(UTM.fromLatLng(gps));
-            content += "<tr><td>UTM REF</td><td colspan='2'>"+utmref.zone+"&nbsp;" +utmref.band+"&nbsp;" +utmref.x+"&nbsp;" +utmref.y+"</td></tr>"; 
+            if(utmref !== undefined){
+                content += "<tr><td>UTM REF</td><td colspan='2'>"+utmref.zone+"&nbsp;" +utmref.band+"&nbsp;" +utmref.x+"&nbsp;" +utmref.y+"</td></tr>";
+            }
         }
         if(this.options.qth){
             var qth = QTH.fromLatLng(gps);

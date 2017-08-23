@@ -16,10 +16,24 @@ var UTM = {
     fromLatLng: function (latlng) {
         //Copyright (c) 2006, HELMUT H. HEIMEIER
 
+        /*
+         * Okay, this just gives the wrong result:
+         * `UTMREF.fromUTM(UTM.fromLatLng({lat: 0, lng: -179.9999999999999}))`
+         * Results in
+         * `Object {zone: "02N", band: "HF", x: "50564", y: "00000"}`
+         * but should be in zone `01N`...
+         **/
         var lw = latlng.lng;
         var bw = latlng.lat;
+        if(lw == -180)
+            lw += 1e-13;//Number.MIN_VALUE;
+        if(lw == 180)
+            lw -= 1e-13;//umber.MIN_VALUE;
+        if(bw == -90)  bw += 1e-13;//umber.MIN_VALUE;
+        if(bw == 90)   bw -= 1e-13;//umber.MIN_VALUE;
         // Geographische Laenge lw und Breite bw im WGS84 Datum
-        if (lw <= -180 || lw > 180 || bw <= -80 || bw >= 84){
+        if (lw <= -180 || lw >= 180 || bw <= -80 || bw >= 84){
+            console.error("Out of lw <= -180 || lw >= 180 || bw <= -80 || bw >= 84 bounds, which is kinda similar to UTM bounds, if you ignore the poles");
             //alert("Werte nicht im Bereich des UTM Systems\n -180 <= LW < +180, -80 < BW < 84 N"); // jshint ignore:line
             return;
         }

@@ -49,6 +49,7 @@ L.Control.mouseCoordinate  = L.Control.extend({
         var content = "<table>";
         if(this.options.gps){
             //Round for display only
+            // Not compromized
             var dLat = Math.round(lat * 100000) / 100000;
             var dLng = Math.round(lng * 100000) / 100000;
             content += "<tr><td>GPS</td><td>" + dLat + "</td><td> " + dLng +"</td></tr>";

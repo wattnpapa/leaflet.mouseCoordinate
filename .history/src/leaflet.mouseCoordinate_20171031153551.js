@@ -78,7 +78,7 @@ L.Control.mouseCoordinate  = L.Control.extend({
         }
         if(this.options.nac){
             var nac = NAC.fromLatLng(gps);
-            content += "<tr><td>NAC</td><td colspan='2'>y: "+nac.y+" x:"+ nac.x +"</td></tr>";
+            content += "<tr><td>NAC</td><td colspan='2'>"+nac.y+" "+ nac.x +"</td></tr>";
         }
             
         content += "</table>";

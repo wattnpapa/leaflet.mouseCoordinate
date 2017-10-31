@@ -52,7 +52,7 @@ L.Control.mouseCoordinate  = L.Control.extend({
             // Not compromized
             var dLat = Math.round(lat * 100000) / 100000;
             var dLng = Math.round(lng * 100000) / 100000;
-            content += "<tr><td>GPS</td><td>Lat(y): " + dLat + "</td><td>Lng(x): " + dLng +"</td></tr>";
+            content += "<tr><td>GPS</td><td>Lat" + dLat + "</td><td> " + dLng +"</td></tr>";
             if(this.options.gpsLong){
                 var gpsMinuten = this._geo2geodeziminuten(gps);
                 content += "<tr><td></td><td class='coords'>"+ gpsMinuten.NS + " " + gpsMinuten.latgrad + "&deg; "+ gpsMinuten.latminuten+"</td><td class='coords'> " + gpsMinuten.WE + " "+ gpsMinuten.lnggrad +"&deg; "+ gpsMinuten.lngminuten +"</td></tr>";
@@ -63,13 +63,13 @@ L.Control.mouseCoordinate  = L.Control.extend({
         if(this.options.utm){
             var utm = UTM.fromLatLng(gps);
             if(utm !== undefined){
-                content += "<tr><td>UTM</td><td colspan='2'>"+utm.zone+"&nbsp;x: " +utm.x+"&nbsp;y: " +utm.y+"</td></tr>";
+                content += "<tr><td>UTM</td><td colspan='2'>"+utm.zone+"&nbsp;" +utm.x+"&nbsp;" +utm.y+"</td></tr>";
             }
         }
         if(this.options.utmref){
             var utmref = UTMREF.fromUTM(UTM.fromLatLng(gps));
             if(utmref !== undefined){
-                content += "<tr><td>UTM REF</td><td colspan='2'>"+utmref.zone+"&nbsp;" +utmref.band+"&nbsp;x: " +utmref.x+"&nbsp;y: " +utmref.y+"</td></tr>";
+                content += "<tr><td>UTM REF</td><td colspan='2'>"+utmref.zone+"&nbsp;" +utmref.band+"&nbsp;" +utmref.x+"&nbsp;" +utmref.y+"</td></tr>";
             }
         }
         if(this.options.qth){
@@ -78,7 +78,7 @@ L.Control.mouseCoordinate  = L.Control.extend({
         }
         if(this.options.nac){
             var nac = NAC.fromLatLng(gps);
-            content += "<tr><td>NAC</td><td colspan='2'>y: "+nac.y+" x:"+ nac.x +"</td></tr>";
+            content += "<tr><td>NAC</td><td colspan='2'>"+nac.y+" "+ nac.x +"</td></tr>";
         }
             
         content += "</table>";

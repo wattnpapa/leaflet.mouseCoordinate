@@ -25,7 +25,7 @@ L.Control.mouseCoordinate  = L.Control.extend({
         var className = 'leaflet-control-mouseCoordinate';
         var container = this._container = L.DomUtil.create('div',className);
         
-        this._gpsPositionContainer = L.DomUtil.create("div","gpsPos",container);
+        this._gpsPositionContainer = L.DomUtil.create("div", 'gpsPos', container);
         
         map.on("mousemove", this._update, this);
         
@@ -55,8 +55,9 @@ L.Control.mouseCoordinate  = L.Control.extend({
             content += "<tr class='gps-coordinates'><td>GPS</td><td>Lat(y): " + dLat + "</td><td>Lng(x): " + dLng +"</td></tr>";
             if(this.options.gpsLong){
                 var gpsMinuten = this._geo2geodeziminuten(gps);
-                content += "<tr class='gps-long-coordinates'><td></td><td class='coords'>"+ gpsMinuten.NS + " " + gpsMinuten.latgrad + "&deg; "+ gpsMinuten.latminuten+"</td><td class='coords'> " + gpsMinuten.WE + " "+ gpsMinuten.lnggrad +"&deg; "+ gpsMinuten.lngminuten +"</td></tr>";
+                content += "<tr class='gps-long-coordinates'><td></td><td class='coords'>"+ gpsMinuten.NS + " " + gpsMinuten.latgrad + "&deg; "+ gpsMinuten.latminuten+"</td><td class='coords'> " + gpsMinuten.WE + " "+ gpsMinuten.lnggrad +"&deg; "+ gpsMinuten.lngminuten +" "+ gpsMinutenSekunden.NS + " " + gpsMinutenSekunden.latgrad + "&deg; "+ gpsMinutenSekunden.latminuten + "&prime; "+ gpsMinutenSekunden.latsekunden+"&Prime;</td><td> " + gpsMinutenSekunden.WE + " "+ gpsMinutenSekunden.lnggrad +"&deg; "+ gpsMinutenSekunden.lngminuten + "&prime; "+ gpsMinutenSekunden.lngsekunden+"&Prime;</td></tr>";
                 var gpsMinutenSekunden = this._geo2gradminutensekunden(gps);
+                
                 content += "<tr class='gps-long-coordinates'><td></td><td>"+ gpsMinutenSekunden.NS + " " + gpsMinutenSekunden.latgrad + "&deg; "+ gpsMinutenSekunden.latminuten + "&prime; "+ gpsMinutenSekunden.latsekunden+"&Prime;</td><td> " + gpsMinutenSekunden.WE + " "+ gpsMinutenSekunden.lnggrad +"&deg; "+ gpsMinutenSekunden.lngminuten + "&prime; "+ gpsMinutenSekunden.lngsekunden+"&Prime;</td></tr>";
             }
         }

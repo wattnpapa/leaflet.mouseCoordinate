@@ -1,4 +1,5 @@
 node_modules/
 .idea/
+.history/
 leaflet.mouseCoordinate.iml
 bower_components

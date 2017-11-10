@@ -21,12 +21,16 @@ L.Control.mouseCoordinate  = L.Control.extend({
 
         if(L.Browser.mobile || L.Browser.mobileWebkit || L.Browser.mobileWebkit3d || L.Browser.mobileOpera || L.Browser.mobileGecko)
             return L.DomUtil.create('div');
-        
-        var className = 'leaflet-control-mouseCoordinate';
-        var container = this._container = L.DomUtil.create('div',className);
 
-        console.log('mouse positions options:  ',this.options);
+        var gpsClassName               = this.options.gps ? ' gps': '';
+        var gpsLongClassName           = this.options.gpsLong ? ' gpsLong' : '';
+        var utmClassName               = this.options.utm ? ' utm': '';
+        var utmrefClassName            = this.options.utmref ? ' utmref' : '';
+        var coordinatesTypesClassNames = gpsClassName + gpsLongClassName + utmClassName + utmrefClassName;
         
+        var className = 'leaflet-control-mouseCoordinate' + coordinatesTypesClassNames;
+        var container = this._container = L.DomUtil.create('div', className);
+
         this._gpsPositionContainer = L.DomUtil.create("div","gpsPos",container);
         
         map.on("mousemove", this._update, this);

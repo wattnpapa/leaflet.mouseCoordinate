@@ -24,6 +24,8 @@ L.Control.mouseCoordinate  = L.Control.extend({
         
         var className = 'leaflet-control-mouseCoordinate';
         var container = this._container = L.DomUtil.create('div',className);
+
+        console.log('mouse positions options:  ',this.options);
         
         this._gpsPositionContainer = L.DomUtil.create("div","gpsPos",container);
         

@@ -4,8 +4,6 @@
 
 .leaflet-control-mouseCoordinate {
     width: 256px;
-    min-height: 30px;
-    text-align: left;
     box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.36);
     background: none repeat scroll 0 0 #fff;
     color: #333;

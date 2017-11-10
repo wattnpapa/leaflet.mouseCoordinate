@@ -21,10 +21,16 @@ L.Control.mouseCoordinate  = L.Control.extend({
 
         if(L.Browser.mobile || L.Browser.mobileWebkit || L.Browser.mobileWebkit3d || L.Browser.mobileOpera || L.Browser.mobileGecko)
             return L.DomUtil.create('div');
+
+        var gpsClassName               = this.options.gps ? ' gps': '';
+        var gpsLongClassName           = this.options.gpsLong ? ' gpsLong' : '';
+        var utmClassName               = this.options.utm ? ' utm': '';
+        var utmrefClassName            = this.options.utmref ? ' utmref' : '';
+        var coordinatesTypesClassNames = gpsClassName + gpsLongClassName + utmClassName + utmrefClassName;
         
-        var className = 'leaflet-control-mouseCoordinate';
-        var container = this._container = L.DomUtil.create('div',className);
-        
+        var className = 'leaflet-control-mouseCoordinate' + coordinatesTypesClassNames;
+        var container = this._container = L.DomUtil.create('div', className);
+
         this._gpsPositionContainer = L.DomUtil.create("div","gpsPos",container);
         
         map.on("mousemove", this._update, this);
@@ -49,35 +55,36 @@ L.Control.mouseCoordinate  = L.Control.extend({
         var content = "<table>";
         if(this.options.gps){
             //Round for display only
+            // Not compromized
             var dLat = Math.round(lat * 100000) / 100000;
             var dLng = Math.round(lng * 100000) / 100000;
-            content += "<tr><td>GPS</td><td>" + dLat + "</td><td> " + dLng +"</td></tr>";
+            content += "<tr class='gps-coordinates'><td>GPS</td><td>Lat(y): " + dLat + "</td><td>Lng(x): " + dLng +"</td></tr>";
             if(this.options.gpsLong){
                 var gpsMinuten = this._geo2geodeziminuten(gps);
-                content += "<tr><td></td><td class='coords'>"+ gpsMinuten.NS + " " + gpsMinuten.latgrad + "&deg; "+ gpsMinuten.latminuten+"</td><td class='coords'> " + gpsMinuten.WE + " "+ gpsMinuten.lnggrad +"&deg; "+ gpsMinuten.lngminuten +"</td></tr>";
+                content += "<tr class='gps-long-coordinates'><td></td><td class='coords'>"+ gpsMinuten.NS + " " + gpsMinuten.latgrad + "&deg; "+ gpsMinuten.latminuten+"</td><td class='coords'> " + gpsMinuten.WE + " "+ gpsMinuten.lnggrad +"&deg; "+ gpsMinuten.lngminuten +"</td></tr>";
                 var gpsMinutenSekunden = this._geo2gradminutensekunden(gps);
-                content += "<tr><td></td><td>"+ gpsMinutenSekunden.NS + " " + gpsMinutenSekunden.latgrad + "&deg; "+ gpsMinutenSekunden.latminuten + "&prime; "+ gpsMinutenSekunden.latsekunden+"&Prime;</td><td> " + gpsMinutenSekunden.WE + " "+ gpsMinutenSekunden.lnggrad +"&deg; "+ gpsMinutenSekunden.lngminuten + "&prime; "+ gpsMinutenSekunden.lngsekunden+"&Prime;</td></tr>";
+                content += "<tr class='gps-long-coordinates'><td></td><td>"+ gpsMinutenSekunden.NS + " " + gpsMinutenSekunden.latgrad + "&deg; "+ gpsMinutenSekunden.latminuten + "&prime; "+ gpsMinutenSekunden.latsekunden+"&Prime;</td><td> " + gpsMinutenSekunden.WE + " "+ gpsMinutenSekunden.lnggrad +"&deg; "+ gpsMinutenSekunden.lngminuten + "&prime; "+ gpsMinutenSekunden.lngsekunden+"&Prime;</td></tr>";
             }
         }
         if(this.options.utm){
             var utm = UTM.fromLatLng(gps);
             if(utm !== undefined){
-                content += "<tr><td>UTM</td><td colspan='2'>"+utm.zone+"&nbsp;" +utm.x+"&nbsp;" +utm.y+"</td></tr>";
+                content += "<tr class='utm-coordinates'><td>UTM</td><td colspan='2'>"+utm.zone+"&nbsp;x: " +utm.x+"&nbsp;y: " +utm.y+"</td></tr>";
             }
         }
         if(this.options.utmref){
             var utmref = UTMREF.fromUTM(UTM.fromLatLng(gps));
             if(utmref !== undefined){
-                content += "<tr><td>UTM REF</td><td colspan='2'>"+utmref.zone+"&nbsp;" +utmref.band+"&nbsp;" +utmref.x+"&nbsp;" +utmref.y+"</td></tr>";
+                content += "<tr class='utmref-coordinates'><td>UTM REF</td><td colspan='2'>"+utmref.zone+"&nbsp;" +utmref.band+"&nbsp;x: " +utmref.x+"&nbsp;y: " +utmref.y+"</td></tr>";
             }
         }
         if(this.options.qth){
             var qth = QTH.fromLatLng(gps);
-            content += "<tr><td>QTH</td><td colspan='2'>"+qth+"</td></tr>";
+            content += "<tr class='qth-coordinates'><td>QTH</td><td colspan='2'>"+qth+"</td></tr>";
         }
         if(this.options.nac){
             var nac = NAC.fromLatLng(gps);
-            content += "<tr><td>NAC</td><td colspan='2'>"+nac.y+" "+ nac.x +"</td></tr>";
+            content += "<tr class='nac-coordinates'><td>NAC</td><td colspan='2'>y: "+nac.y+" x:"+ nac.x +"</td></tr>";
         }
             
         content += "</table>";

@@ -3,11 +3,8 @@
 */
 
 .leaflet-control-mouseCoordinate {
-    width: 250px;
-    min-height: 30px;
-    text-align: left;
-    border-radius: 5px;
-    box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+    width: 256px;
+    box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.36);
     background: none repeat scroll 0 0 #fff;
     color: #333;
     padding: 6px 10px 6px 6px;
@@ -15,8 +12,4 @@
 
 .leaflet-control-mouseCoordinate table{
     width: 100%;
-}
-
-.coords{
-    width: 90px;
 }

@@ -24,11 +24,11 @@
     "url": "https://github.com/PowerPan/leaflet.mouseCoordinate/issues"
   },
   "homepage": "https://github.com/PowerPan/leaflet.mouseCoordinate#readme",
-  "scripts":{
+  "scripts": {
     "build": "rimraf ./dist && grunt"
   },
   "devDependencies": {
-    "grunt": "~1.0.1",
+    "grunt": "^1.0.3",
     "grunt-browserify": "5.2.0",
     "grunt-concat-css": "0.3.2",
     "grunt-contrib-concat": "1.0.1",

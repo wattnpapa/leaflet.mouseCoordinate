@@ -58,7 +58,7 @@ L.Control.mouseCoordinate  = L.Control.extend({
             // Not compromized
             var dLat = Math.round(lat * 100000) / 100000;
             var dLng = Math.round(lng * 100000) / 100000;
-            content += "<tr class='gps-coordinates'><td>GPS</td><td>Lat(y): " + dLat + "</td><td>Lng(x): " + dLng +"</td></tr>";
+            content += "<tr class='gps-coordinates'><td>GPS</td><td>Lng(x): " + dLng + "</td><td>Lat(y): " + dLat + "</td></tr>";
             if(this.options.gpsLong){
                 var gpsMinuten = this._geo2geodeziminuten(gps);
                 content += "<tr class='gps-long-coordinates'><td></td><td class='coords'>"+ gpsMinuten.NS + " " + gpsMinuten.latgrad + "&deg; "+ gpsMinuten.latminuten+"</td><td class='coords'> " + gpsMinuten.WE + " "+ gpsMinuten.lnggrad +"&deg; "+ gpsMinuten.lngminuten +"</td></tr>";

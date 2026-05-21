@@ -1,32 +1,49 @@
-[![GitHub version](https://badge.fury.io/gh/PowerPan%2Fleaflet.mouseCoordinate.svg)](http://badge.fury.io/gh/PowerPan%2Fleaflet.mouseCoordinate) [![Code Climate](https://codeclimate.com/github/PowerPan/leaflet.mouseCoordinate/badges/gpa.svg)](https://codeclimate.com/github/PowerPan/leaflet.mouseCoordinate) [![Build Status](https://travis-ci.org/PowerPan/leaflet.mouseCoordinate.svg?branch=master)](https://travis-ci.org/PowerPan/leaflet.mouseCoordinate)
+# leaflet.mouseCoordinate
 
-Installation
-====
-Manuell
----
-Download the Source and add it into your Project Folder 
+[![GitHub version](https://badge.fury.io/gh/PowerPan%2Fleaflet.mouseCoordinate.svg)](http://badge.fury.io/gh/PowerPan%2Fleaflet.mouseCoordinate)
+[![Build Status](https://github.com/PowerPan/leaflet.mouseCoordinate/actions/workflows/ci.yml/badge.svg)](https://github.com/PowerPan/leaflet.mouseCoordinate/actions)
 
-Bower
-----
-```
-bower install --save leaflet.mouseCoordinate
-```
-[![get this with bower](http://benschwarz.github.io/bower-badges/badge@2x.png)](http://bower.io/ "get this with bower")
+A Leaflet control that displays the current mouse position in multiple coordinate systems.
 
-Usage
-====
+**[→ Live Demo](https://powerpan.github.io/leaflet.mouseCoordinate/)**
+
+## Installation
+
+**npm**
 ```
-L.control.mouseCoordinate({utm:true,utmref:true}).addTo(map);
+npm install leaflet.mousecoordinate
 ```
 
-Options
-====
-| Option | Type    | Default | Description |
-|--------|---------|---------|-------------|
-| gps    | Boolean | true    | Show GPS Coordinates in 1 Form:  ddd.ddddd                             |
-| gpsLong| Boolean | true    | Show GPS Coordinates in 3 Forms:  ddd.ddddd / ddd mm.mmm / ddd mm ss.s |
-| utm    | Boolean | false   | Show [UTM Coordinates] (https://en.wikipedia.org/wiki/Universal_Transverse_Mercator_coordinate_system)            |
-| utmref | Boolean | false   | Show [UTMREF/MGRS/USNG Coordinates] (https://en.wikipedia.org/wiki/Military_grid_reference_system)            |
-| qth    | Boolean | false   | Show [QTH/Maidenhead Locator] (https://en.wikipedia.org/wiki/Maidenhead_Locator_System)            |
-| nac    | Boolean | false   | Show [Natural Area Code] (https://en.wikipedia.org/wiki/Natural_Area_Code)           |
-| position | String | 'bottomright'   | The initial position of the control (one of the map corners). See [control positions](http://leafletjs.com/reference.html#control-positions).     |
+**Manual**  
+Download and include `dist/leaflet.mousecoordinate.js` and `dist/leaflet.mousecoordinate.css` in your project.
+
+## Usage
+
+```js
+L.control.mouseCoordinate({ utm: true, utmref: true }).addTo(map);
+```
+
+## Options
+
+| Option   | Type    | Default       | Description |
+|----------|---------|---------------|-------------|
+| gps      | Boolean | true          | Show GPS coordinates (decimal degrees) |
+| gpsLong  | Boolean | true          | Show GPS in three formats: dd.ddddd / dd mm.mmm / dd mm ss.s |
+| utm      | Boolean | false         | Show [UTM](https://en.wikipedia.org/wiki/Universal_Transverse_Mercator_coordinate_system) coordinates |
+| utmref   | Boolean | false         | Show [UTMREF / MGRS](https://en.wikipedia.org/wiki/Military_grid_reference_system) coordinates |
+| qth      | Boolean | false         | Show [QTH / Maidenhead](https://en.wikipedia.org/wiki/Maidenhead_Locator_System) locator |
+| nac      | Boolean | false         | Show [Natural Area Code](https://en.wikipedia.org/wiki/Natural_Area_Code) |
+| position | String  | 'bottomright' | Leaflet [control position](https://leafletjs.com/reference.html#control-positions) |
+
+## Custom Styling
+
+The control adds CSS classes to its container based on which options are enabled (e.g. `.gps`, `.gpsLong`, `.utm`, `.utmref`, `.qth`, `.nac`). Each row in the coordinate table also carries a class like `.gps-coordinates`, `.utm-coordinates`, etc., making it easy to target individual rows via CSS.
+
+## Development
+
+```bash
+npm install
+npx grunt          # lint, build, minify, generate docs
+npx grunt check    # lint only (ESLint + CSSLint)
+npm run docs       # regenerate doc/ only
+```

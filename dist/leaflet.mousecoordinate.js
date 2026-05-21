@@ -1,4 +1,4 @@
-/* 
+/*
     Author     : Johannes Rudolph
 */
 /* globals L: true */
@@ -9,26 +9,32 @@ L.Control.mouseCoordinate  = L.Control.extend({
         utm: false,
         utmref: false,
         position: 'bottomright',
-        
+
         _sm_a: 6378137.0,
         _sm_b: 6356752.314,
         _sm_EccSquared: 6.69437999013e-03,
         _UTMScaleFactor: 0.9996
-        
+
     },
     onAdd: function(map){
         this._map = map;
 
         if(L.Browser.mobile || L.Browser.mobileWebkit || L.Browser.mobileWebkit3d || L.Browser.mobileOpera || L.Browser.mobileGecko)
             return L.DomUtil.create('div');
-        
-        var className = 'leaflet-control-mouseCoordinate';
-        var container = this._container = L.DomUtil.create('div',className);
-        
+
+        var gpsClassName               = this.options.gps     ? ' gps'     : '';
+        var gpsLongClassName           = this.options.gpsLong ? ' gpsLong' : '';
+        var utmClassName               = this.options.utm     ? ' utm'     : '';
+        var utmrefClassName            = this.options.utmref  ? ' utmref'  : '';
+        var coordinatesTypesClassNames = gpsClassName + gpsLongClassName + utmClassName + utmrefClassName;
+
+        var className = 'leaflet-control-mouseCoordinate' + coordinatesTypesClassNames;
+        var container = this._container = L.DomUtil.create('div', className);
+
         this._gpsPositionContainer = L.DomUtil.create("div","gpsPos",container);
-        
+
         map.on("mousemove", this._update, this);
-        
+
         return container;
     },
     _update: function(e){
@@ -51,40 +57,38 @@ L.Control.mouseCoordinate  = L.Control.extend({
             //Round for display only
             var dLat = Math.round(lat * 100000) / 100000;
             var dLng = Math.round(lng * 100000) / 100000;
-            content += "<tr><td>GPS</td><td>" + dLat + "</td><td> " + dLng +"</td></tr>";
+            content += "<tr class='gps-coordinates'><td>GPS</td><td>Lng (x): " + dLng + "</td><td>Lat (y): " + dLat + "</td></tr>";
             if(this.options.gpsLong){
                 var gpsMinuten = this._geo2geodeziminuten(gps);
-                content += "<tr><td></td><td class='coords'>"+ gpsMinuten.NS + " " + gpsMinuten.latgrad + "&deg; "+ gpsMinuten.latminuten+"</td><td class='coords'> " + gpsMinuten.WE + " "+ gpsMinuten.lnggrad +"&deg; "+ gpsMinuten.lngminuten +"</td></tr>";
+                content += "<tr class='gps-long-coordinates'><td></td><td class='coords'>"+ gpsMinuten.NS + " " + gpsMinuten.latgrad + "&deg; "+ gpsMinuten.latminuten+"</td><td class='coords'> " + gpsMinuten.WE + " "+ gpsMinuten.lnggrad +"&deg; "+ gpsMinuten.lngminuten +"</td></tr>";
                 var gpsMinutenSekunden = this._geo2gradminutensekunden(gps);
-                content += "<tr><td></td><td>"+ gpsMinutenSekunden.NS + " " + gpsMinutenSekunden.latgrad + "&deg; "+ gpsMinutenSekunden.latminuten + "&prime; "+ gpsMinutenSekunden.latsekunden+"&Prime;</td><td> " + gpsMinutenSekunden.WE + " "+ gpsMinutenSekunden.lnggrad +"&deg; "+ gpsMinutenSekunden.lngminuten + "&prime; "+ gpsMinutenSekunden.lngsekunden+"&Prime;</td></tr>";
+                content += "<tr class='gps-long-coordinates'><td></td><td>"+ gpsMinutenSekunden.NS + " " + gpsMinutenSekunden.latgrad + "&deg; "+ gpsMinutenSekunden.latminuten + "&prime; "+ gpsMinutenSekunden.latsekunden+"&Prime;</td><td> " + gpsMinutenSekunden.WE + " "+ gpsMinutenSekunden.lnggrad +"&deg; "+ gpsMinutenSekunden.lngminuten + "&prime; "+ gpsMinutenSekunden.lngsekunden+"&Prime;</td></tr>";
             }
         }
         if(this.options.utm){
             var utm = UTM.fromLatLng(gps);
             if(utm !== undefined){
-                content += "<tr><td>UTM</td><td colspan='2'>"+utm.zone+"&nbsp;" +utm.x+"&nbsp;" +utm.y+"</td></tr>";
+                content += "<tr class='utm-coordinates'><td>UTM</td><td colspan='2'>"+utm.zone+"&nbsp;x: " +utm.x+"&nbsp;y: " +utm.y+"</td></tr>";
             }
         }
         if(this.options.utmref){
             var utmref = UTMREF.fromUTM(UTM.fromLatLng(gps));
             if(utmref !== undefined){
-                content += "<tr><td>UTM REF</td><td colspan='2'>"+utmref.zone+"&nbsp;" +utmref.band+"&nbsp;" +utmref.x+"&nbsp;" +utmref.y+"</td></tr>";
+                content += "<tr class='utmref-coordinates'><td>UTM REF</td><td colspan='2'>"+utmref.zone+"&nbsp;" +utmref.band+"&nbsp;x: " +utmref.x+"&nbsp;y: " +utmref.y+"</td></tr>";
             }
         }
         if(this.options.qth){
             var qth = QTH.fromLatLng(gps);
-            content += "<tr><td>QTH</td><td colspan='2'>"+qth+"</td></tr>";
+            content += "<tr class='qth-coordinates'><td>QTH</td><td colspan='2'>"+qth+"</td></tr>";
         }
         if(this.options.nac){
             var nac = NAC.fromLatLng(gps);
-            content += "<tr><td>NAC</td><td colspan='2'>"+nac.y+" "+ nac.x +"</td></tr>";
+            content += "<tr class='nac-coordinates'><td>NAC</td><td colspan='2'>y: "+nac.y+" x: "+ nac.x +"</td></tr>";
         }
-            
+
         content += "</table>";
         this._gpsPositionContainer.innerHTML = content;
-    },    
-
-
+    },
 
     _geo2geodeziminuten: function (gps){
         var latgrad = parseInt(gps.lat,10);
@@ -105,7 +109,7 @@ L.Control.mouseCoordinate  = L.Control.extend({
         var lngminuten = (gps.lng - lnggrad) * 60;
         var lngsekunden = Math.round(((lngminuten - parseInt(lngminuten,10)) * 60) * 100) /100;
         lngminuten = parseInt(lngminuten,10);
-        
+
         return this._AddNSEW({latgrad: latgrad, latminuten: latminuten,latsekunden: latsekunden, lnggrad: lnggrad, lngminuten: lngminuten, lngsekunden: lngsekunden});
     },
     _AddNSEW: function (coord){
@@ -575,7 +579,6 @@ var UTMREF = {
 
         // Laengenzone zone, Ostwert ew und Nordwert nw im WGS84 Datum
         var z1 = zone.substr(0, 2);
-        var z2 = zone.substr(2, 1);
         var ew1 = parseInt(ew.substr(0, 2),10);
         var nw1 = parseInt(nw.substr(0, 2),10);
         var ew2 = ew.substr(2, 5);
@@ -636,13 +639,9 @@ var UTMREF = {
         var m_east_0 = "STUVWXYZ";
         var m_east_1 = "ABCDEFGH";
         var m_east_2 = "JKLMNPQR";
-        var m_north_0 = "FGHJKLMNPQRSTUVABCDE";
-        var m_north_1 = "ABCDEFGHJKLMNPQRSTUV";
 
-        //zone = raster.substr(0,3);
         var zone = mgr.zone;
         var r_east = mgr.band.substr(0, 1);
-        var r_north = mgr.band.substr(1, 1);
 
         var i = parseInt(zone.substr(0, 2),10) % 3;
         var m_ce;

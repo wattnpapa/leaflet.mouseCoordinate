@@ -26,7 +26,6 @@ var UTMREF = {
 
         // Laengenzone zone, Ostwert ew und Nordwert nw im WGS84 Datum
         var z1 = zone.substr(0, 2);
-        var z2 = zone.substr(2, 1);
         var ew1 = parseInt(ew.substr(0, 2),10);
         var nw1 = parseInt(nw.substr(0, 2),10);
         var ew2 = ew.substr(2, 5);
@@ -87,13 +86,9 @@ var UTMREF = {
         var m_east_0 = "STUVWXYZ";
         var m_east_1 = "ABCDEFGH";
         var m_east_2 = "JKLMNPQR";
-        var m_north_0 = "FGHJKLMNPQRSTUVABCDE";
-        var m_north_1 = "ABCDEFGHJKLMNPQRSTUV";
 
-        //zone = raster.substr(0,3);
         var zone = mgr.zone;
         var r_east = mgr.band.substr(0, 1);
-        var r_north = mgr.band.substr(1, 1);
 
         var i = parseInt(zone.substr(0, 2),10) % 3;
         var m_ce;

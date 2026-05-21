@@ -7,6 +7,9 @@
     "dist/",
     "src/"
   ],
+  "scripts": {
+    "docs": "jsdoc src/ -d doc"
+  },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
@@ -33,12 +36,13 @@
     "leaflet": ">=1.0.0"
   },
   "devDependencies": {
+    "eslint": "~9.27.0",
     "grunt": "~1.6.1",
     "grunt-contrib-concat": "~2.1.0",
     "grunt-contrib-csslint": "~2.0.0",
     "grunt-contrib-cssmin": "~5.0.0",
-    "grunt-contrib-jshint": "~3.2.0",
     "grunt-contrib-uglify": "~5.2.2",
-    "grunt-jsdoc": "~2.4.1"
+    "grunt-eslint": "~26.0.0",
+    "jsdoc": "~4.0.5"
   }
 }

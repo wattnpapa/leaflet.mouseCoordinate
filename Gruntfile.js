@@ -15,8 +15,10 @@ module.exports = function (grunt) {
             }
         },
 
-        jshint: {
-            all: ['src/*.js']
+        eslint: {
+            all: {
+                src: ['src/*.js']
+            }
         },
 
         cssmin: {
@@ -37,15 +39,6 @@ module.exports = function (grunt) {
             }
         },
 
-        jsdoc: {
-            dist: {
-                src: ['src/*.js'],
-                options: {
-                    destination: 'doc'
-                }
-            }
-        },
-
         uglify: {
             options: {
                 banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> Copyright by <%= pkg.author %> */\n'
@@ -57,13 +50,24 @@ module.exports = function (grunt) {
         }
     });
 
-    grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-eslint');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-csslint');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
-    grunt.loadNpmTasks('grunt-jsdoc');
 
-    grunt.registerTask('check', ['jshint', 'csslint']);
-    grunt.registerTask('default', ['jshint', 'csslint', 'concat', 'uglify', 'cssmin', 'jsdoc']);
+    grunt.registerTask('jsdoc', 'Generate JSDoc documentation', function () {
+        var done = this.async();
+        require('child_process').exec(
+            'node node_modules/.bin/jsdoc src/ -d doc',
+            function (err, stdout, stderr) {
+                if (err) { grunt.log.error(stderr); return done(false); }
+                grunt.log.ok('Documentation generated to doc/');
+                done();
+            }
+        );
+    });
+
+    grunt.registerTask('check', ['eslint', 'csslint']);
+    grunt.registerTask('default', ['eslint', 'csslint', 'concat', 'uglify', 'cssmin', 'jsdoc']);
 };

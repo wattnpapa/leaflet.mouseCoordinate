@@ -2,25 +2,24 @@
 
 module.exports = function (grunt) {
 
-    // Project configuration.
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
 
         concat: {
-          options: {
-            separator: ';'
-          },
-          dist: {
-            src: ['src/*.js'],
-            dest: 'dist/<%= pkg.name %>.js'
-          }
+            options: {
+                separator: ';'
+            },
+            dist: {
+                src: ['src/*.js'],
+                dest: 'dist/<%= pkg.name %>.js'
+            }
         },
 
         jshint: {
             all: ['src/*.js']
         },
 
-        cssmin:{
+        cssmin: {
             options: {
                 shorthandCompacting: false,
                 roundingPrecision: -1
@@ -38,8 +37,8 @@ module.exports = function (grunt) {
             }
         },
 
-        jsdoc : {
-            dist : {
+        jsdoc: {
+            dist: {
                 src: ['src/*.js'],
                 options: {
                     destination: 'doc'
@@ -47,28 +46,24 @@ module.exports = function (grunt) {
             }
         },
 
-        
         uglify: {
-          options: {
-            banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> Copyright by <%= pkg.author.name %> <%= pkg.author.email %> */\n'
-          },
-          build: {
-            src: 'dist/<%= pkg.name %>.js',
-            dest: 'dist/<%= pkg.name %>.min.js'
-          }
+            options: {
+                banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> Copyright by <%= pkg.author %> */\n'
+            },
+            build: {
+                src: 'dist/<%= pkg.name %>.js',
+                dest: 'dist/<%= pkg.name %>.min.js'
+            }
         }
     });
 
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-contrib-qunit');
     grunt.loadNpmTasks('grunt-contrib-csslint');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-jsdoc');
 
     grunt.registerTask('check', ['jshint', 'csslint']);
-    grunt.registerTask('test', ['qunit']);
-    grunt.registerTask('jenkins', ['jshint', 'qunit']);
     grunt.registerTask('default', ['jshint', 'csslint', 'concat', 'uglify', 'cssmin', 'jsdoc']);
 };

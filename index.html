@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>leaflet.mouseCoordinate – Demo</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9/dist/leaflet.css" />
+    <link rel="stylesheet" href="leaflet.mousecoordinate.css" />
+
+    <style>
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html, body { width: 100%; height: 100%; }
+      #map { width: 100%; height: 100%; }
+
+      #info {
+        position: absolute;
+        top: 12px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 1000;
+        background: rgba(255, 255, 255, 0.92);
+        backdrop-filter: blur(4px);
+        padding: 8px 16px;
+        border-radius: 6px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+        font: 13px/1.5 system-ui, sans-serif;
+        text-align: center;
+        white-space: nowrap;
+      }
+      #info a {
+        color: #0066cc;
+        text-decoration: none;
+      }
+      #info a:hover { text-decoration: underline; }
+    </style>
+  </head>
+
+  <body>
+    <div id="map"></div>
+
+    <div id="info">
+      Maus über die Karte bewegen &nbsp;·&nbsp;
+      <a href="https://github.com/PowerPan/leaflet.mouseCoordinate" target="_blank" rel="noopener">
+        leaflet.mouseCoordinate auf GitHub
+      </a>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9/dist/leaflet.js"></script>
+    <script src="leaflet.mousecoordinate.js"></script>
+
+    <script>
+      var map = L.map('map').setView([51.163375, 10.447683], 6);
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap</a>-Mitwirkende'
+      }).addTo(map);
+
+      L.control.mouseCoordinate({
+        gps:     true,
+        gpsLong: true,
+        utm:     true,
+        utmref:  true,
+        qth:     true,
+        nac:     true,
+        position: 'bottomright'
+      }).addTo(map);
+    </script>
+  </body>
+</html>

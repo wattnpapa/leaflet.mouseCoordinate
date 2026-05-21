@@ -25,3 +25,34 @@ jobs:
 
       - run: npm ci
       - run: npx grunt
+
+  deploy-pages:
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.ref == 'refs/heads/master'
+
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+          cache: 'npm'
+
+      - run: npm ci
+      - run: npx grunt concat uglify cssmin
+
+      - name: Sync dist into docs
+        run: |
+          cp dist/leaflet.mousecoordinate.js  docs/leaflet.mousecoordinate.js
+          cp dist/leaflet.mousecoordinate.css docs/leaflet.mousecoordinate.css
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs
+          publish_branch: gh-pages
